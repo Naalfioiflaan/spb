@@ -44,10 +44,19 @@
                         <a class="dropdown-toggle text-light" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Nadira
                         </a>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item fw-bold" href="#">{{user}}</a></li>
-                          <li><a class="dropdown-item" href="#">Another action</a></li>
-                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <ul class="dropdown-menu shadow">
+                          <li style="text-align: center; margin-top: 8px; margin-bottom: 5px"><img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 3rem; height: 3rem;"></li>
+                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user}}</a></li>
+                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{email_user}}</a></li>
+                          <li style="text-align: center;"><a class="dropdown-item">
+                            <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
+                          </li>
+                          <hr class="mt-2 mb-2 my-1">
+                          <li>
+                            <a class="nav-link fw-bold d-flex align-items-center ms-3" href="#" style="color: #807B7B; font-size: 14px;">
+                              <span><iconify-icon inline icon="material-symbols:logout" style="font-size: 25px;"></iconify-icon></span>
+                              &nbsp;Log Out</a>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -59,7 +68,7 @@
                 <div class="col-5 d-flex ps-5">
                   <div class="align-self-center">
                     <h3 class="ff-source-sans display-5 text-light mb-0" style="font-weight: 500;">Selamat Datang,</h3>
-                    <h3 class="ff-source-sans text-light" style="font-weight: 600;" >{{user}}</h3>
+                    <h3 class="ff-source-sans text-light" style="font-weight: 600;">{{user}}</h3>
                     <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700;">Admin</div>
                   </div>
                 </div>
@@ -72,12 +81,102 @@
           </div>
     </div>
 
-    <h1>{{nama}}</h1>
-    <ul>
-        <li><a href="{% url 'index' %}">Dashboard</a></li>
-        <li><a href="{% url 'klasifikasi_berita' %}">Klasifikasi Berita</a></li>
-        <li><a href="{% url 'kelola_pengguna' %}">Kelola Pengguna</a></li>
-    </ul>
+    <!-- tulisan terakhir diambil -->
+    <div class="container-fluid ">
+      <div class="row d-flex justify-content-end text-end mt-4 me-2">
+        <h6 class="ff-source-sans text-dark" style="font-weight: 700;" >Terakhir diambil : {{tgl_terakhir_diambil}} </h6>
+      </div>
+    </div>
+
+    <!-- pilihan klasifikasi berita -->
+    <div class="container-fluid mb-5">
+      <div class="row align-item-center my-3 mb-4">
+        <h2 class="ff-source-sans text-dark text-center" style="font-weight: 600;">Klasifikasi Berita</h2>
+      </div>
+      <div class="row d-flex align-item-center justify-content-center mb-5">
+        <div class="col-4 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 23rem; height: 13rem; background-image: url('static/img/bg-kemiskinan.png');">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <h1 class="ff-source-sans text-light text-center" style="font-weight: 600;">Kemiskinan</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 23rem; height: 13rem; background-image: url('static/img/bg-pengangguran.png');">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <h1 class="ff-source-sans text-light text-center" style="font-weight: 600;">Pengangguran</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 23rem; height: 13rem; background-image: url('static/img/bg-demokrasi.png');">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <h1 class="ff-source-sans text-light text-center" style="font-weight: 600;">Demokrasi</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row d-flex align-item-center justify-content-center my-5">
+        <div class="col-6 d-flex justify-content-center py-5">
+          <div class="card d-flex shadow" style="width: 23rem; height: 13rem; background-image: url('static/img/bg-perekonomi.png');">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <h1 class="ff-source-sans text-light text-center" style="font-weight: 600;">Pertumbuhan <br>Ekonomi</h1>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 d-flex justify-content-center py-5">
+          <div class="card d-flex shadow" style="width: 23rem; height: 13rem; background-image: url('static/img/bg-inflasi.png');">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <h1 class="ff-source-sans text-light text-center" style="font-weight: 600;">Inflasi</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- card website berita -->
+    <div class="container-fluid my-5 py-5
+    ">
+      <div class="row align-item-center my-3 mx-5">
+        <h4 class="ff-source-sans text-dark text-center" style="font-weight: 600;">Sumber Website Berita</h4>
+      </div>
+      <div class="row d-flex align-item-center justify-content-center">
+        <div class="col-3 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <img src="{% static '/img/logo-riaupos.png'%}" alt="logo riau pos" style="width: 200px;">
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <img src="{% static '/img/logo-haluanriau.png'%}" alt="logo riau pos" style="width: 200px;">
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <img src="{% static '/img/logo-goriau.png'%}" alt="logo riau pos" style="width: 200px;">
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <img src="{% static '/img/logo-tribun.png'%}" alt="logo riau pos" style="width: 200px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="text-center mt-5 mb-3 ff-source-sans pt-5" style="color: #777777 ;">
+      Magang MBKM Universitas Riau 2023
+      </div>
+    
 
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
