@@ -1,0 +1,291 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+    <!-- header -->
+        <div class="bg-color-blue bg-body-tertiary ff-source-sans" >
+            <!-- navbar -->
+            <div class="container-fluid">
+                <div class="row align-items-center pt-2">
+                    <div class="col-3 px-1">
+                        <a href="#" class="pull-left mt-2"><img src="{% static '/img/logo_bps.png'%}" alt="logo_bps" style="width: 250px;"></a> 
+                    </div>
+                    <div class="col-6 navbar d-flex justify-content-center">
+                      <ul class="nav nav-pills text-light">
+                        <li class="nav-item">
+                          <a class="nav-link active" style="background-color: #367B99;" aria-current="page" href="#">
+                            <span><iconify-icon inline icon="material-symbols:dashboard"></iconify-icon></span>
+                            Dashboard</a>
+                        </li>
+                        <li class="nav-item mx-5">
+                          <a class="nav-link text-light" href="{% url 'klasifikasi_berita' %}">
+                            <span><iconify-icon inline icon="material-symbols:newspaper-rounded" style="font-size: 20px;"></iconify-icon></span>
+                            &nbsp;Klasifikasi Berita</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link text-light" href="{% url 'kelola_pengguna' %}">
+                            <span><iconify-icon inline icon="mdi:users-group" style="font-size: 20px;"></iconify-icon></span>
+                            &nbsp;Kelola Pengguna</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-3 px-4">
+                      <div class="dropdown d-flex justify-content-end align-items-center">
+                        <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
+                        <a class="dropdown-toggle text-light" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Nadira
+                        </a>
+                        <ul class="dropdown-menu shadow">
+                          <li style="text-align: center; margin-top: 8px; margin-bottom: 5px"><img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;"></li>
+                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" href="#">{{user}}</a></li>
+                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" href="#" style="color: #807B7B; font-size: 14px;">{{email_user}}</a></li>
+                          <li style="text-align: center;"><a class="dropdown-item" href="#">
+                            <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
+                          </li>
+                          <hr class="mt-2 mb-2 my-1">
+                          <li>
+                            <a class="nav-link fw-bold d-flex align-items-center ms-3" href="#" style="color: #807B7B; font-size: 14px;">
+                              <span><iconify-icon inline icon="material-symbols:logout" style="font-size: 25px;"></iconify-icon></span>
+                              &nbsp;Log Out</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+          
+            <div class="container-fluid px-0">
+              <div class="row align-items-stretch align-items-center bg-header" style="background-image: url('static/img/bg-header-2.png'); background-size: cover;background-position-x: 10rem; background-repeat: no-repeat;">
+                <div class="col-5 d-flex ps-5">
+                  <div class="align-self-center">
+                    <h3 class="ff-source-sans display-5 text-light mb-0" style="font-weight: 500;">Selamat Datang,</h3>
+                    <h3 class="ff-source-sans text-light" style="font-weight: 600;" >{{user}}</h3>
+                    <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700;">Admin</div>
+                  </div>
+                </div>
+                <div class="col-7 py-5 d-flex justify-content-end position-relative px-0" >
+                    <img class="" src="{% static '/img/bg-card-header.png'%}" alt="bg card header">
+                    <h1 class="z-2 ff-source-sans position-absolute pe-5 top-50 translate-middle-y" style="right: 5%; font-weight: 800; color: #05628B; font-size: 50px;" >SISTEM <br> PENGKLASIFIKASI <br> BERITA</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <!-- card website berita -->
+    <div class="container-fluid">
+      <div class="row align-item-center my-3">
+        <h2 class="ff-source-sans text-dark text-center" style="font-weight: 600;">Ambil Berita</h2>
+      </div>
+      <div class="row d-flex align-item-center justify-content-center">
+        <div class="col-3 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <img src="{% static '/img/logo-riaupos.png'%}" alt="logo riau pos" style="width: 200px;">
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <img src="{% static '/img/logo-haluanriau.png'%}" alt="logo riau pos" style="width: 200px;">
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <img src="{% static '/img/logo-goriau.png'%}" alt="logo riau pos" style="width: 200px;">
+            </div>
+          </div>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <div class="h-100 d-flex justify-content-center align-items-center">
+              <img src="{% static '/img/logo-tribun.png'%}" alt="logo riau pos" style="width: 200px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- tulisan terakhir diambil -->
+    <div class="container-fluid ">
+      <div class="row d-flex justify-content-end text-end mt-5 me-2">
+        <h6 class="ff-source-sans text-dark" style="font-weight: 700;" >Terakhir diambil : {{tgl_terakhir_diambil}} </h6>
+      </div>
+    </div>
+
+    <!-- card tabel -->
+    <div class="container-fluid">
+      <div class="row d-flex align-item-center justify-content-center mx-2 mb-4">
+        <div class="card d-flex shadow" style="background-color: #ECECEC;">
+          
+          <!--baris tulisan Data berita -->
+          <div class="row mt-3 ms-1">
+            <h5 class="ff-source-sans text-dark" style="font-weight: 700;" >Data Berita </h5>
+          </div>
+          
+          <!-- baris total berita -->
+          <div class="row d-flex ms-1">
+            <div class="col-3 d-flex align-items-end">
+              <h1 class="ff-source-sans text-dark m-0" style="font-weight: 700;" > {{total_berita}}</h1>
+              <h5 class="ff-source-sans text-dark m-0 ps-2 pb-2" style="font-weight: 700;" >Total Berita </h5>
+            </div>
+            <div class="col-9 d-flex justify-content-end">
+              <form role="search">
+                <input class="form-control w-100" type="search" placeholder="Cari" aria-label="Search">
+              </form>
+            </div>
+          </div>
+
+          <!-- tabel -->
+          <table class="table mt-5">
+            <!-- nama kolom -->
+            <thead>
+              <tr>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Judul</th>
+                <th scope="col">Link</th>
+                <th scope="col">Kemiskinan</th>
+                <th scope="col">Pengangguran</th>
+                <th scope="col">Demokrasi</th>
+                <th scope="col">Inflasi</th>
+                <th scope="col">Pert. Ekonomi</th>
+                <th scope="col"> </th>
+              </tr>
+            </thead>
+            <!-- data -->
+            <tbody>
+              <tr>
+                <td>{{tgl_berita}}</td>
+                <td>{{judul_berita}}</td>
+                <td> <a href="{{link_berita}}">{{link_berita}}</a></td>
+                <td> 
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+                <td>
+                  <div class="form-check d-flex justify-content-center">
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-check d-flex justify-content-center">
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>{{tgl_berita}}</td>
+                <td>{{judul_berita}}</td>
+                <td> <a href="{{link_berita}}">{{link_berita}}</a></td>
+                <td> 
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+                <td>
+                  <div class="form-check d-flex justify-content-center">
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+                <td>
+                  <div class="form-check d-flex justify-content-center">
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>{{tgl_berita}}</td>
+                <td>{{judul_berita}}</td>
+                <td> <a href="{{link_berita}}">{{link_berita}}</a></td>
+                <td> 
+                  <div class="form-check d-flex justify-content-center">
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">-</div>
+                </td>
+                <td>
+                  <div class="form-check d-flex justify-content-center">
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="container-fluid">
+      <nav class="ff-source-sans me-2" aria-label="Page navigation example" style="font-weight:600;">
+        <ul class="pagination justify-content-end" id="pagination">
+          <li class="page-item"><a class="page-link" href="#">Awal</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">...</a></li>
+          <li class="page-item"><a class="page-link" href="#">14</a></li>
+          <li class="page-item"><a class="page-link" href="#">15</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">Akhir</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- footer -->
+    <div class="text-center mt-5 mb-3 ff-source-sans pt-5" style="color: #777777 ;">
+    Magang MBKM Universitas Riau 2023
+    </div>
+
+    
+
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+
+</body>
+</html>

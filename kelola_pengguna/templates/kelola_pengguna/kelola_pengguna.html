@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Pengguna</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+    <h1>{{nama}}</h1>
+    <ul>
+        <li><a href="{% url 'index' %}">Dashboard</a></li>
+        <li><a href="{% url 'klasifikasi_berita' %}">Klasifikasi Berita</a></li>
+        <li><a href="{% url 'kelola_pengguna' %}">Kelola Pengguna</a></li>
+    </ul>
+
+    <script src="{% static 'bootstrap/jquery/slim.min.js' %}" ></script>
+    <script src="{% static 'bootstrap/js/popper.min.js' %}" ></script>
+    <script src="{% static 'bootstrap/js/bootstrap/min.js' %}"></script>
+    
+</body>
+</html>
