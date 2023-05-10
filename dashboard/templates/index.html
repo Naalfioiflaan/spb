@@ -8,6 +8,16 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'main.css' %}">
+    <style>
+      .page-input {
+        border: 0;
+        outline: 0;
+        background: transparent;
+        border-bottom: 1px solid black;
+        width: 2rem;
+        text-align: center;
+      }
+    </style>
 </head>
 <body>
     <!-- header -->
@@ -147,106 +157,84 @@
           </div>
 
           <!-- tabel -->
-          <table class="table mt-5">
+          <table id="tabelberita" class="table mt-5">
             <!-- nama kolom -->
             <thead>
               <tr>
                 <th scope="col">Tanggal</th>
                 <th scope="col">Judul</th>
                 <th scope="col">Link</th>
-                <th scope="col">Kemiskinan</th>
-                <th scope="col">Pengangguran</th>
-                <th scope="col">Demokrasi</th>
-                <th scope="col">Inflasi</th>
-                <th scope="col">Pert. Ekonomi</th>
+                <th scope="col">Hiburan</th>
+                <th scope="col">Olahraga</th>
+                <th scope="col">Riau</th>
+                <th scope="col">Nasional</th>
+                <th scope="col">Kampar</th>
                 <th scope="col"> </th>
               </tr>
             </thead>
             <!-- data -->
             <tbody>
+              {% for berit in list %}
               <tr>
-                <td>{{tgl_berita}}</td>
-                <td>{{judul_berita}}</td>
-                <td> <a href="{{link_berita}}">{{link_berita}}</a></td>
+                <td>{{berit.tanggal}}</td>
+                <td>{{berit.judul}}</td>
+                <td> <a href="{{link_berita}}">{{berit.link}}</a></td>
                 <td> 
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-                <td>
-                  <div class="form-check d-flex justify-content-center">
+                  <div class="d-flex justify-content-center">
+                    {% if berit.topik == 'Hiburan' %}
                     <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                     <label class="form-check-label" for="flexCheckDefault"></label>
+                    {% else %}
+                    -
+                    {% endif %}
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    {% if berit.topik == 'Olahraga' %}
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                    {% else %}
+                    -
+                    {% endif %}
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    {% if berit.topik == 'Riau' %}
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                    {% else %}
+                    -
+                    {% endif %}
                   </div>
                 </td>
                 <td>
                   <div class="form-check d-flex justify-content-center">
+                    {% if berit.topik == 'Nasional' %}
                     <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                     <label class="form-check-label" for="flexCheckDefault"></label>
+                    {% else %}
+                    -
+                    {% endif %}
+                  </div>
+                </td>
+                <td>
+                  <div class="form-check d-flex justify-content-center">
+                    {% if berit.topik == 'Kampar' %}
+                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                    <label class="form-check-label" for="flexCheckDefault"></label>
+                    {% else %}
+                    -
+                    {% endif %}
                   </div>
                 </td>
               </tr>
 
-              <tr>
-                <td>{{tgl_berita}}</td>
-                <td>{{judul_berita}}</td>
-                <td> <a href="{{link_berita}}">{{link_berita}}</a></td>
-                <td> 
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-                <td>
-                  <div class="form-check d-flex justify-content-center">
-                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
-                    <label class="form-check-label" for="flexCheckDefault"></label>
-                  </div>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-                <td>
-                  <div class="form-check d-flex justify-content-center">
-                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
-                    <label class="form-check-label" for="flexCheckDefault"></label>
-                  </div>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-              </tr>
+              {% endfor %}
 
-              <tr>
-                <td>{{tgl_berita}}</td>
-                <td>{{judul_berita}}</td>
-                <td> <a href="{{link_berita}}">{{link_berita}}</a></td>
-                <td> 
-                  <div class="form-check d-flex justify-content-center">
-                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
-                    <label class="form-check-label" for="flexCheckDefault"></label>
-                  </div>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-center">-</div>
-                </td>
-                <td>
-                  <div class="form-check d-flex justify-content-center">
-                    <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
-                    <label class="form-check-label" for="flexCheckDefault"></label>
-                  </div>
-                </td>
-              </tr>
             </tbody>
           </table>
-
         </div>
       </div>
     </div>
@@ -254,24 +242,29 @@
     <!-- Pagination -->
     <div class="container-fluid">
       <nav class="ff-source-sans me-2" aria-label="Page navigation example" style="font-weight:600;">
-        <ul class="pagination justify-content-end" id="pagination">
-          <li class="page-item"><a class="page-link" href="#">Awal</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
+        <ul class="pagination h-100 align-items-center justify-content-end" id="pagination">
+          <li class="page-item h-100"><a class="page-link h-100" href="?page=1">Awal</a></li>
+          {% if list.has_previous %}
+          <li class="page-item h-100">
+            <a class="page-link h-100" href="?page={{list.previous_page_number}}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">...</a></li>
-          <li class="page-item"><a class="page-link" href="#">14</a></li>
-          <li class="page-item"><a class="page-link" href="#">15</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
+          {% endif %}
+          <li class="page-item h-100">
+            <label class="page-link h-100" style="font-size: .78rem;">Page 
+              <input class="page-input" type="text" id="page-input" value="{{list.number}}"/>
+              of {{list.paginator.num_pages}}
+            </label>
+          </li>
+          {% if list.has_next %}
+          <li class="page-item h-100">
+            <a class="page-link h-100" href="?page={{list.next_page_number}}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">Akhir</a></li>
+          {% endif %}
+          <li class="page-item h-100"><a class="page-link h-100" href="?page={{list.paginator.num_pages}}">Akhir</a></li>
         </ul>
       </nav>
     </div>
@@ -286,6 +279,18 @@
   <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+  <script>
+    const input = document.getElementById('page-input');
+    input.addEventListener('input', function() {
+      input.addEventListener('keyup', function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+  
+          window.open("?page="+input.value, "_self");
+        }
+      })
+    });
+  </script>
 
 </body>
 </html>

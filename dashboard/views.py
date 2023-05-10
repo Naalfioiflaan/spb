@@ -1,7 +1,19 @@
 from django.shortcuts import render
+from .models import Berita
+
+# import pagination stuff
+from django.core.paginator import Paginator
+
 
 # Create your views here.
 def index(request) :
+    berita = Berita.objects.all()
+
+    # mengatur pagination
+    p = Paginator(Berita.objects.all(), 20)
+    page = request.GET.get('page')
+    list = p.get_page(page)
+
     context = {
         'nama' : 'Selamat Datang',
         'user' : 'Nadira Alifia Ionendri',
@@ -10,6 +22,8 @@ def index(request) :
         'tgl_berita' : '2019-03-14',
         'judul_berita' : 'Naik Terus, Harga TBS kelapa sawit dekati RP 3000 per KG',
         'link_berita': 'https://riaupos.jawapos.com/eko',
-        'email_user' : 'alifianadira11@gmail.com'
+        'email_user' : 'alifianadira11@gmail.com',
+        'berita' : berita,
+        'list' : list
     }
     return render(request, 'index.html', context)
