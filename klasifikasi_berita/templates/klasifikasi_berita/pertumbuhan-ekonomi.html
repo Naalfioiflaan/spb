@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pertumbuhan Ekonomi</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+
+    <!-- header -->
+    <div>
+        <div class="bg-color-blue bg-body-tertiary ff-source-sans" >
+            <!-- navbar -->
+            <div class="container-fluid">
+                <div class="row align-items-center pt-2 pb-2">
+                    <div class="col-3 px-1">
+                        <a href="#" class="pull-left mt-2"><img src="{% static '/img/logo_bps.png'%}" alt="logo_bps" style="width: 250px;"></a> 
+                    </div>
+                    <div class="col-6 navbar d-flex justify-content-center">
+                      <ul class="nav nav-pills text-light">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'index' %}">
+                                <span><iconify-icon inline icon="material-symbols:dashboard"></iconify-icon></span>
+                                &nbsp;Dashboard</a>
+                        </li>
+                        <li class="nav-item mx-5">
+                            <a class="nav-link active" style="background-color: #367B99;" aria-current="page" href="#">
+                                <span><iconify-icon inline icon="material-symbols:newspaper-rounded" style="font-size: 20px;"></iconify-icon></span>
+                            Klasifikasi Berita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'kelola_pengguna' %}">
+                              <span><iconify-icon inline icon="mdi:users-group" style="font-size: 20px;"></iconify-icon></span>
+                              &nbsp;Kelola Pengguna</a>
+                          </li>
+                      </ul>
+                    </div>
+                    <div class="col-3 px-4">
+                      <div class="dropdown d-flex justify-content-end align-items-center">
+                        <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
+                        <a class="dropdown-toggle text-light" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Nadira
+                        </a>
+                        <ul class="dropdown-menu shadow">
+                          <li style="text-align: center; margin-top: 8px; margin-bottom: 5px"><img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 3rem; height: 3rem;"></li>
+                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user}}</a></li>
+                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{email_user}}</a></li>
+                          <li style="text-align: center;"><a class="dropdown-item">
+                            <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
+                          </li>
+                          <hr class="mt-2 mb-2 my-1">
+                          <li>
+                            <a class="nav-link fw-bold d-flex align-items-center ms-3" href="#" style="color: #807B7B; font-size: 14px;">
+                              <span><iconify-icon inline icon="material-symbols:logout" style="font-size: 25px;"></iconify-icon></span>
+                              &nbsp;Log Out</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+  
+    <!-- footer -->
+    <div class="text-center mt-5 mb-3 ff-source-sans pt-5" style="color: #777777 ;">
+    Magang MBKM Universitas Riau 2023
+    </div>
+
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+    
+</body>
+</html>

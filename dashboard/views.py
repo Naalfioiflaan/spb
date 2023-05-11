@@ -27,3 +27,4 @@ def index(request) :
         'list' : list
     }
     return render(request, 'index.html', context)
+
