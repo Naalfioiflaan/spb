@@ -28,7 +28,7 @@
                                 &nbsp;Dashboard</a>
                         </li>
                         <li class="nav-item mx-5">
-                            <a class="nav-link active" style="background-color: #367B99;" aria-current="page" href="#">
+                            <a class="nav-link active" style="background-color: #367B99;" aria-current="page" href="{% url 'klasifikasi_berita' %}">
                                 <span><iconify-icon inline icon="material-symbols:newspaper-rounded" style="font-size: 20px;"></iconify-icon></span>
                             Klasifikasi Berita</a>
                         </li>
@@ -65,6 +65,194 @@
             </div>
           </div>
     </div>
+
+        <!-- baris tulisan kemiskinan dan total berita -->
+        <div class="container-fluid">
+          <div class="row mt-4">
+              <div class="col ms-3">
+                  <div class="card d-flex shadow" style="width: 22rem; height: 3.5rem; background-color: #5183C0;">
+                      <div class="h-100 d-flex justify-content-center align-items-center">
+                          <h2 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                              Pertumbuhan&nbsp;Ekonomi
+                            </h2>
+                      </div>
+                  </div>
+              </div>
+              <div class="col d-flex justify-content-end text-end me-3">
+                  <div class="card h-100 py-2 shadow" style="width: 10rem; height: 3.5rem; background-color: #ECECEC;">
+                      <p class="ff-source-sans text-dark m-0 text-center" style="font-weight: 700;" >Total Berita </p>
+                      <h2 class="ff-source-sans text-dark m-0 text-center" style="font-weight: 700;" >{{total_berita}}</h2>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+      <!-- baris chart -->
+      <div class="container-fluid">
+          <div class="row mt-4">
+              <div class="col-4 ms-3">
+                  <div class="card h-100 py-3 ps-4 shadow" style="width: rem; height: 5rem; background-color: #ECECEC;">
+                      <p class="ff-source-sans text-dark m-0 text-start" style="font-weight: 700;" >Persentase Jumlah Pengaruh Berita Pertumbuhan Ekonomi</p>
+                  </div>
+              </div>
+              <div class="col me-3">
+                  <div class="card h-100 py-3 ps-4 shadow" style="width: rem; height: 5rem; background-color: #ECECEC;">
+                      <p class="ff-source-sans text-dark m-0 text-center" style="font-weight: 700;" >Grafik jumlah Pengaruh Berita Pertumbuhan Ekonomi</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+      <!-- tabel -->
+      <div class="container-fluid">
+      <div class="row d-flex align-item-center justify-content-center mx-3 mb-4 mt-4">
+          <div class="card d-flex shadow" style="background-color: #ECECEC;">
+          
+          <!-- baris tulisan data berita dan kotak cari -->
+          <div class="row d-flex ms-1 mt-3">
+              <div class="col-3 d-flex align-items-end">
+              <h5 class="ff-source-sans text-dark pb-2" style="font-weight: 700;" >Data Berita </h5>
+              </div>
+              <div class="col-9 d-flex justify-content-end">
+              <form role="search">
+                  <input class="form-control w-100" type="search" placeholder="Cari" aria-label="Search">
+              </form>
+              </div>
+          </div>
+  
+          <!-- tabel -->
+          <table id="tabelberita" class="table mt-4">
+              <!-- nama kolom -->
+              <thead>
+              <tr>
+                  <th scope="col">Tanggal</th>
+                  <th scope="col">Judul</th>
+                  <th scope="col">Link</th>
+                  <th scope="col">Naik</th>
+                  <th scope="col">Turun</th>
+                  <th scope="col">Tidak&nbsp;Ada</th>
+              </tr>
+              </thead>
+              <!-- data -->
+              <tbody>
+              {% for berit in list %}
+              <tr>
+                  <td>{{berit.tanggal}}</td>
+                  <td>{{berit.judul}}</td>
+                  <td> <a href="{{link_berita}}">{{berit.link}}</a></td>
+                  <td> 
+                  <div class="d-flex justify-content-center">
+                      {% if berit.topik == 'Hiburan' %}
+                      <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                      <label class="form-check-label" for="flexCheckDefault"></label>
+                      {% else %}
+                      -
+                      {% endif %}
+                  </div>
+                  </td>
+                  <td>
+                  <div class="d-flex justify-content-center">
+                      {% if berit.topik == 'Olahraga' %}
+                      <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                      <label class="form-check-label" for="flexCheckDefault"></label>
+                      {% else %}
+                      -
+                      {% endif %}
+                  </div>
+                  </td>
+                  <td>
+                  <div class="d-flex justify-content-center">
+                      {% if berit.topik == 'Riau' %}
+                      <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
+                      <label class="form-check-label" for="flexCheckDefault"></label>
+                      {% else %}
+                      -
+                      {% endif %}
+                  </div>
+                  </td>
+              </tr>
+  
+              {% endfor %}
+  
+              </tbody>
+          </table>
+          </div>
+      </div>
+      </div>
+        
+      <!-- Pagination -->
+      <div class="container-fluid">
+      <nav class="ff-source-sans me-3" aria-label="Page navigation example" style="font-weight:600;">
+          <ul class="pagination h-100 align-items-center justify-content-end" id="pagination">
+          <li class="page-item h-100"><a class="page-link h-100" href="?page=1">Awal</a></li>
+          {% if list.has_previous %}
+          <li class="page-item h-100">
+              <a class="page-link h-100" href="?page={{list.previous_page_number}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              </a>
+          </li>
+          {% endif %}
+          <li class="page-item h-100">
+              <label class="page-link h-100" style="font-size: .78rem;">Page 
+              <input class="page-input" type="text" id="page-input" value="{{list.number}}"/>
+              of {{list.paginator.num_pages}}
+              </label>
+          </li>
+          {% if list.has_next %}
+          <li class="page-item h-100">
+              <a class="page-link h-100" href="?page={{list.next_page_number}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              </a>
+          </li>
+          {% endif %}
+          <li class="page-item h-100"><a class="page-link h-100" href="?page={{list.paginator.num_pages}}">Akhir</a></li>
+          </ul>
+      </nav>
+      </div>
+  
+      <!-- button export -->
+      <div class="container-fluid">
+          <div class="d-flex justify-content-end ">
+              <button class="btn me-3 mt-4 fw-bold mb-4" type="button" style="color: #198754; background-color: #ECECEC; border-width: 2px; border-color: #198754;">Export to Excel</button>
+            </div>
+      </div>
+  
+      <!-- card website berita -->
+      <div class="container-fluid">
+          <div class="row align-item-center mt-5 mb-2">
+            <h4 class="ff-source-sans text-dark text-center" style="font-weight: 600;">Sumber Website Berita</h4>
+          </div>
+          <div class="row d-flex align-item-center justify-content-center">
+            <div class="col-3 d-flex justify-content-center">
+              <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <img src="{% static '/img/logo-riaupos.png'%}" alt="logo riau pos" style="width: 200px;">
+                </div>
+              </div>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+              <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <img src="{% static '/img/logo-haluanriau.png'%}" alt="logo riau pos" style="width: 200px;">
+                </div>
+              </div>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+              <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <img src="{% static '/img/logo-goriau.png'%}" alt="logo riau pos" style="width: 200px;">
+                </div>
+              </div>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+              <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <img src="{% static '/img/logo-tribun.png'%}" alt="logo riau pos" style="width: 200px;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
   
     <!-- footer -->
     <div class="text-center mt-5 mb-3 ff-source-sans pt-5" style="color: #777777 ;">
@@ -74,6 +262,17 @@
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+    <script>
+      const input = document.getElementById('page-input');
+      input.addEventListener('input', function() {
+        input.addEventListener('keyup', function(event) {
+          if (event.keyCode === 13) {
+            event.preventDefault();
+            window.open("?page="+input.value, "_self");
+          }
+        })
+      });
+    </script>
     
 </body>
 </html>

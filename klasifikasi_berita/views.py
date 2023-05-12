@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Berita
+
+# import pagination stuff
+from django.core.paginator import Paginator
 
 # Create your views here.
 def klasifikasi_berita(request):
@@ -12,19 +16,86 @@ def klasifikasi_berita(request):
     return render(request, 'klasifikasi_berita/klasifikasi_berita.html', context)
 
 def kemiskinan(request) :
+    berita = Berita.objects.all()
+
+    # mengatur pagination
+    p = Paginator(Berita.objects.all(), 20)
+    page = request.GET.get('page')
+    list = p.get_page(page)
+
     context = {
-        'total_berita' : 10.321,
+        'total_berita' : 5.321,
+        'user' : 'Nadira Alifia Ionendri',
+        'email_user' : 'alifianadira11@gmail.com',
+        'berita' : berita,
+        'list' : list
     }
     return render(request, 'klasifikasi_berita/kemiskinan.html',context)
 
 def pengangguran(request) :
-    return render(request, 'klasifikasi_berita/pengangguran.html')
+    berita = Berita.objects.all()
+
+    # mengatur pagination
+    p = Paginator(Berita.objects.all(), 20)
+    page = request.GET.get('page')
+    list = p.get_page(page)
+
+    context = {
+        'total_berita' : 5.321,
+        'user' : 'Nadira Alifia Ionendri',
+        'email_user' : 'alifianadira11@gmail.com',
+        'berita' : berita,
+        'list' : list
+    }
+    return render(request, 'klasifikasi_berita/pengangguran.html', context)
 
 def demokrasi(request) :
-    return render(request, 'klasifikasi_berita/demokrasi.html')
+    berita = Berita.objects.all()
+
+    # mengatur pagination
+    p = Paginator(Berita.objects.all(), 20)
+    page = request.GET.get('page')
+    list = p.get_page(page)
+
+    context = {
+        'total_berita' : 5.321,
+        'user' : 'Nadira Alifia Ionendri',
+        'email_user' : 'alifianadira11@gmail.com',
+        'berita' : berita,
+        'list' : list
+    }
+    return render(request, 'klasifikasi_berita/demokrasi.html',context)
 
 def inflasi(request) :
-    return render(request, 'klasifikasi_berita/inflasi.html')
+    berita = Berita.objects.all()
+
+    # mengatur pagination
+    p = Paginator(Berita.objects.all(), 20)
+    page = request.GET.get('page')
+    list = p.get_page(page)
+
+    context = {
+        'total_berita' : 5.321,
+        'user' : 'Nadira Alifia Ionendri',
+        'email_user' : 'alifianadira11@gmail.com',
+        'berita' : berita,
+        'list' : list
+    }
+    return render(request, 'klasifikasi_berita/inflasi.html', context)
 
 def ekonomi(request) :
-    return render(request, 'klasifikasi_berita/pertumbuhan-ekonomi.html')
+    berita = Berita.objects.all()
+
+    # mengatur pagination
+    p = Paginator(Berita.objects.all(), 20)
+    page = request.GET.get('page')
+    list = p.get_page(page)
+
+    context = {
+        'total_berita' : 5.321,
+        'user' : 'Nadira Alifia Ionendri',
+        'email_user' : 'alifianadira11@gmail.com',
+        'berita' : berita,
+        'list' : list
+    }
+    return render(request, 'klasifikasi_berita/pertumbuhan-ekonomi.html',context)

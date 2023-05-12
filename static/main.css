@@ -33,3 +33,12 @@ nav {
 #pagination a{
     font-size: 13px;
 }
+
+.page-input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    width: 2rem;
+    text-align: center;
+}
