@@ -1,0 +1,331 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Berita</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+
+    <!-- header -->
+    <div>
+        <div class="bg-color-blue bg-body-tertiary ff-source-sans" >
+            <!-- navbar -->
+            <div class="container-fluid">
+                <div class="row align-items-center pt-2 pb-2">
+                    <div class="col-3 px-1">
+                        <a href="#" class="pull-left mt-2"><img src="{% static '/img/logo_bps.png'%}" alt="logo_bps" style="width: 250px;"></a> 
+                    </div>
+                    <div class="col-6 navbar d-flex justify-content-center">
+                      <ul class="nav nav-pills text-light">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'index' %}">
+                                <span><iconify-icon inline icon="material-symbols:dashboard"></iconify-icon></span>
+                                &nbsp;Dashboard</a>
+                        </li>
+                        <li class="nav-item mx-5">
+                            <a class="nav-link text-light" href="{% url 'klasifikasi_berita' %}">
+                              <span><iconify-icon inline icon="material-symbols:newspaper-rounded" style="font-size: 20px;"></iconify-icon></span>
+                              &nbsp;Klasifikasi Berita</a>
+                          </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="{% url 'kelola_pengguna' %}">
+                              <span><iconify-icon inline icon="mdi:users-group" style="font-size: 20px;"></iconify-icon></span>
+                              &nbsp;Kelola Pengguna</a>
+                          </li>
+                      </ul>
+                    </div>
+                    <div class="col-3 px-4">
+                      <div class="dropdown d-flex justify-content-end align-items-center">
+                        <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
+                        <a class="dropdown-toggle text-light" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Nadira
+                        </a>
+                        <ul class="dropdown-menu shadow">
+                          <li style="text-align: center; margin-top: 8px; margin-bottom: 5px"><img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 3rem; height: 3rem;"></li>
+                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user}}</a></li>
+                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{email_user}}</a></li>
+                          <li style="text-align: center;"><a class="dropdown-item">
+                            <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
+                          </li>
+                          <hr class="mt-2 mb-2 my-1">
+                          <li>
+                            <a class="nav-link fw-bold d-flex align-items-center ms-3" href="#" style="color: #807B7B; font-size: 14px;">
+                              <span><iconify-icon inline icon="material-symbols:logout" style="font-size: 25px;"></iconify-icon></span>
+                              &nbsp;Log Out</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+
+    <!-- tulisan Detail Berita-->
+    <div class="container-fluid ">
+        <div class="row d-flex justify-content-start text-start mt-4 ms-5">
+          <h4 class="ff-source-sans text-dark" style="font-weight: 700;">
+            Detail Berita
+          </h4>
+        </div>
+      </div>
+
+    <!--card detail berita -->
+    <div class="container-fluid">
+        <div class="row">
+          <!-- kolom isi berita -->
+            <div class="col-9">
+                <div class="row d-flex align-item-center justify-content-center ms-5 mb-5 mt-4 pe-5">
+                    <div class="card d-flex shadow" style="background-color: #ECECEC;">
+                        <!--judul  -->
+                      <div class="row">
+                        <h3 class="ff-source-sans fw-bold ps-4 pt-3">{{judul}}</h3>
+                      </div>
+                      
+                      <!-- baris judul tanggal, sumber, topik -->
+                      <div class="row d-flex align-items-center ms-0 mt-5">
+                          <!-- tanggal -->
+                          <div class="col d-flex justify-content-center fw-bold">
+                              <span><iconify-icon inline icon="material-symbols:date-range"></iconify-icon></span>
+                              &nbsp;Tanggal 
+                          </div>
+                          <!-- topik -->
+                          <div class="col d-flex justify-content-center fw-bold">
+                              <span><iconify-icon inline icon="material-symbols:topic"></iconify-icon></span>
+                              &nbsp;Topik</a>
+                          </div>
+                          <!-- sumber -->
+                          <div class="col d-flex justify-content-center fw-bold">
+                              <span><iconify-icon inline icon="material-symbols:frame-source"></iconify-icon></span>
+                              &nbsp;Sumber</a>
+                          </div>
+                      </div>
+
+                    <!-- baris isi tanggal, sumber, topik -->
+                    <div class="row d-flex align-items-center ms-0 mt-3 mb-2">
+                      <!-- tanggal -->
+                      <div class="col d-flex justify-content-center">
+                          14 Mei 2023
+                      </div>
+                      <!-- topik -->
+                      <div class="col d-flex justify-content-center">
+                          Politik
+                      </div>
+                      <!-- sumber -->
+                      <div class="col d-flex justify-content-center">
+                          Riau Pos
+                      </div>
+                    </div>
+                    <hr style="border: 1px solid black;">
+
+                    <!-- teks berita -->
+                     <div class="row ff-source-sans mx-3 mt-3 mb-5">
+                      {{teks}} <br><br> {{teks2}} <br><br> {{teks3}} <br><br> {{teks4}} <br><br> {{teks5}} <br><br> {{teks6}} <br><br> {{teks7}}
+                     </div>
+                    </div>
+                </div>
+            </div>
+
+          <!-- kolom opsi klasifikasi -->
+          <div class="col-3 mt-4 ps-3">
+            <div class="card d-flex shadow" style="width: 18rem; height: 2.3rem; background-color: #1177C2;">
+              <div class="h-100 d-flex justify-content-center align-items-center">
+                <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                  Detail&nbsp;Klasifikasi
+                </h5>
+              </div>
+            </div>
+            <!-- kemiskinan -->
+            <div class="card d-flex mt-3 align-items-center" style="width: 18rem; height: 10rem; background-color: #ECECEC;">
+              <!-- judul box klasifikasi -->
+              <div class="card d-flex shadow justify-content-center mt-3" style="width: 8rem; height: 2.3rem; background-color: #5E4D3D;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    Kemiskinan
+                  </h5>
+                </div>
+              </div>
+              <!-- checkbox pengaruh -->
+              <div class="row my-3">
+                <div class="col d-flex align-items-center">
+                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                  </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                  </div>
+              </div>
+              <!-- hapus klasifikasi -->
+              
+                <div class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D;">
+                  <div class="h-100 d-flex justify-content-center align-items-center">
+                    <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
+                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                      &nbsp;Hapus Klasifikasi
+                    </h6>
+                  </div>
+                </div>
+              
+            </div>
+
+            <!-- pengangguran -->
+            <div class="card d-flex mt-3 align-items-center" style="width: 18rem; height: 10rem; background-color: #ECECEC;">
+              <!-- judul box klasifikasi -->
+              <div class="card d-flex shadow justify-content-center mt-3" style="width: 9rem; height: 2.3rem; background-color: #BA9966;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    Pengangguran
+                  </h5>
+                </div>
+              </div>
+              <!-- checkbox pengaruh -->
+              <div class="row my-3">
+                Tidak pada klasifikasi ini
+              </div>
+              <!-- tambah klasifikasi -->
+                <div class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #4ECB71;">
+                  <div class="h-100 d-flex justify-content-center align-items-center">
+                    <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
+                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                      &nbsp;Tambah Klasifikasi
+                    </h6>
+                  </div>
+                </div>
+              
+            </div>
+
+             <!-- demokrasi -->
+             <div class="card d-flex mt-3 align-items-center" style="width: 18rem; height: 10rem; background-color: #ECECEC;">
+              <!-- judul box klasifikasi -->
+              <div class="card d-flex shadow justify-content-center mt-3" style="width: 7rem; height: 2.3rem; background-color: #BE2222;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    Demokrasi
+                  </h5>
+                </div>
+              </div>
+              <!-- checkbox pengaruh -->
+              <div class="row my-3">
+                Tidak pada klasifikasi ini
+              </div>
+              <!-- tambah klasifikasi -->
+                <div class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #4ECB71;">
+                  <div class="h-100 d-flex justify-content-center align-items-center">
+                    <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
+                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                      &nbsp;Tambah Klasifikasi
+                    </h6>
+                  </div>
+                </div>
+              
+            </div>
+
+            <!-- pertumbuhan ekonomi -->
+            <div class="card d-flex mt-3 align-items-center" style="width: 18rem; height: 10rem; background-color: #ECECEC;">
+              <!-- judul box klasifikasi -->
+              <div class="card d-flex shadow justify-content-center mt-3" style="width: 14rem; height: 2.3rem; background-color: #5183C0;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    Pertumbuhan&nbsp;Ekonomi
+                  </h5>
+                </div>
+              </div>
+              <!-- checkbox pengaruh -->
+              <div class="row my-3">
+                <div class="col d-flex align-items-center">
+                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                  </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                  </div>
+              </div>
+              <!-- hapus klasifikasi -->
+              
+                <div class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D;">
+                  <div class="h-100 d-flex justify-content-center align-items-center">
+                    <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
+                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                      &nbsp;Hapus Klasifikasi
+                    </h6>
+                  </div>
+                </div>
+              
+            </div>
+
+            <!-- inflasi -->
+            <div class="card d-flex mt-3 align-items-center" style="width: 18rem; height: 10rem; background-color: #ECECEC;">
+              <!-- judul box klasifikasi -->
+              <div class="card d-flex shadow justify-content-center mt-3" style="width: 5rem; height: 2.3rem; background-color: #F39320;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    Inflasi
+                  </h5>
+                </div>
+              </div>
+              <!-- checkbox pengaruh -->
+              <div class="row my-3">
+                <div class="col d-flex align-items-center">
+                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                  </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                  </div>
+              </div>
+              <!-- hapus klasifikasi -->
+                <div class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D;">
+                  <div class="h-100 d-flex justify-content-center align-items-center">
+                    <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
+                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                      &nbsp;Hapus Klasifikasi
+                    </h6>
+                  </div>
+                </div>
+              
+            </div>
+
+            <!-- tombol perbarui-->
+            <a href="" style="text-decoration: none;"><div class="card d-flex shadow ms-auto me-4 mt-4" style="width: 6rem; height: 2.3rem; background-color: #033559;">
+              <div class="h-100 d-flex justify-content-center align-items-center">
+                <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                  Perbarui
+                </h5>
+              </div>
+            </div></a>
+
+          </div>
+        </div>
+        
+  
+      <!-- footer -->
+      <div class="text-center mt-5 mb-3 ff-source-sans pt-5" style="color: #777777 ;">
+      Magang MBKM Universitas Riau 2023
+      </div>
+
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+    
+</body>
+</html>

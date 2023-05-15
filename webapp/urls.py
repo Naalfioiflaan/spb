@@ -23,6 +23,7 @@ from kelola_pengguna import views as kp
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('detail_berita', views.detail, name='detail-berita'),
     path('klasifikasi_berita', kb.klasifikasi_berita, name='klasifikasi_berita'),
     path('kelola_pengguna', kp.kelola_pengguna, name='kelola_pengguna'),
     path('kemiskinan', kb.kemiskinan, name="kemiskinan"),
