@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 
 
 # Create your views here.
+
 def index(request) :
     berita = Berita.objects.all()
 
@@ -39,7 +40,8 @@ def detail(request) :
         'teks5' : "\"PT. Musim Mas Batang Kulim Palm Oil Mill menjual Kernel dengan harga Rp8.330,00/Kg harga minggu ini. PTPN V Sei Buatan, PTPN V Sei Tapung, PT. Buana Wiralestari Mas, PT. Ramajaya Pramukti, tidak melakukan penjualan pada minggu ini,\" ujarnya. ",
         'teks6' : 'Sebagaimana diketahui bersama bahwa dari minggu lalu harga TBS yang ditetapkan oleh tim mengalami kenaikan. Kenaikan harga minggu ini lebih disebabkan karena faktor kenaikan harga CPO. Sedangkan sistem tata kelola penetapan harga TBS Provinsi Riau semakin membaik.',
         'teks7' : '"Membaiknya tata kelola penetapan harga merupakan upaya yang serius dari seluruh stake holder yang didukung oleh Pemerintah Provinsi Riau dan Kejaksaan Tinggi Riau. Komitmen bersama ini pada akhirnya tentu akan berimbas pada peningkatan pendapatan petani yang bermuara pada kesejahteraan masyarakat," ujarnya.',
-
     }
     return render(request, 'detail_berita.html', context)
 
+def login(request) :
+    return render(request, 'login.html')

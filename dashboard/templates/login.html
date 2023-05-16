@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+
+    <!-- card base -->
+    <div class="container-fluid">
+        <div class="row d-flex align-item-center justify-content-center mt-2 my-5 px-5 pt-3">
+            <div class="card d-flex shadow" style="background-color: #ECECEC; width: 60rem; height: 37rem;">
+                <div class="row">
+                    <div class="col d-flex justify-content-end position-relative px-0">
+                        <img class="" src="{% static '/img/bg-login.png'%}" alt="bg login" style="height: 37rem;">
+                        <h1 class="z-2 ff-source-sans position-absolute pe-5 top-50 translate-middle-y text-center" style="font-weight: 800; color: #05628B; font-size: 50px;" >SISTEM <br> PENGKLASIFIKASI <br> BERITA</h3>
+                    </div>
+                    <div class="col">
+                        <div class="row ms-3">
+                            <h3 class="ff-ubuntu fw-bold mt-4 pt-3">Hey, hello</h3>
+                        </div>
+                        <div class="row ms-3">
+                            <p class="ff-ubuntu">Silakan masukkan informasi akun anda untuk mulai menggunakan sistem </p> 
+                        </div>
+                        <div class="row ms-3 mt-2">
+                            <label class="form-label ff-ubuntu fw-bold">Email</label>
+                            <input type="text" class="form-control ff-ubuntu ms-2" style="font-size: 14px;width: 23rem;" placeholder="Masukkan Email">
+                        </div>
+                        <div class="row ms-3 mt-4">
+                            <label class="form-label ff-ubuntu fw-bold">Password</label>
+                            <input type="password" class="form-control ff-ubuntu ms-2" style="font-size: 14px;width: 23rem;" placeholder="Masukkan Password">
+                        </div>
+                        <div class="row ms-1 mt-3">
+                            <div class="col ms-2">
+                                <div class="col-auto">
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" id="autoSizingCheck2">
+                                      <label class="form-check-label ff-ubuntu" for="autoSizingCheck2" style="font-size: 15px;">
+                                        Ingat saya
+                                      </label>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col ms-4">
+                                <a href="" style="text-decoration: none;">
+                                   <p class="ff-ubuntu fw-bold" style="color: #7A7878; font-size: 14px;">Lupa Password ?</p> 
+                                </a>
+                            </div>
+                        </div>
+                        <!-- button login -->
+                        <div class="row ms-3 mt-3">
+                            <button type="button" class="btn ff-ubuntu fw-bold text-light" style="background-color: #05628B; width: 23rem;">LOGIN</button>
+                        </div>
+                        <!-- tulisan atau -->
+                        <div class="row ms-3 mt-2 me-5 pe-2 ps-2">
+                            <table width="100%">
+                                <tr>
+                                  <td><hr /></td>
+                                  <td style="width:1px; padding: 0 10px; white-space: nowrap; color: #7A7878;" class="ff-ubuntu fw-bold">Atau</td>
+                                  <td><hr /></td>
+                                </tr>
+                              </table>
+                        </div>
+                        <!-- button sign in with google -->
+                        <div class="row ms-3 mt-2">
+                            <button type="button" class="btn ff-ubuntu fw-bold" style="color: #5B5555; width: 23rem; border: 1px solid #7A7878;">
+                                <span><iconify-icon inline icon="logos:google-icon"></iconify-icon></span>
+                                &nbsp; Masuk dengan Google</button>
+                        </div>
+                        <!-- tulisan belum punya akun -->
+                        <div class="row g-0 mt-4">
+                            <div class="col ms-5 text-end">
+                                <p class="ff-ubuntu" style="color: #7A7878;">Belum punya akun?</p>
+                            </div>
+                            <div class="col text-start ps-1">
+                                <a href="" class="ff-ubuntu fw-bold" style="color: #656363; text-decoration: none;">Daftar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- footer -->
+    <div class="text-center mt-3 mb-3 ff-source-sans pt-4" style="color: #777777 ;">
+    Magang MBKM Universitas Riau 2023
+    </div>
+
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+    
+</body>
+</html>
