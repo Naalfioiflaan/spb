@@ -52,7 +52,7 @@
                           </li>
                           <hr class="mt-2 mb-2 my-1">
                           <li>
-                            <a class="nav-link fw-bold d-flex align-items-center ms-3" href="#" style="color: #807B7B; font-size: 14px;">
+                            <a class="nav-link fw-bold d-flex align-items-center ms-3" href="{% url 'logout' %}" style="color: #807B7B; font-size: 14px;">
                               <span><iconify-icon inline icon="material-symbols:logout" style="font-size: 25px;"></iconify-icon></span>
                               &nbsp;Log Out</a>
                           </li>
@@ -154,24 +154,23 @@
                 <th scope="col">Tanggal</th>
                 <th scope="col">Judul</th>
                 <th scope="col">Link</th>
-                <th scope="col">Hiburan</th>
-                <th scope="col">Olahraga</th>
-                <th scope="col">Riau</th>
-                <th scope="col">Nasional</th>
-                <th scope="col">Kampar</th>
-                <th scope="col"> </th>
+                <th scope="col">Kemiskinan</th>
+                <th scope="col">Pengangguran</th>
+                <th scope="col">Demokrasi</th>
+                <th scope="col">Inflasi</th>
+                <th scope="col">Pertumbuhan Ekonomi</th>
               </tr>
             </thead>
             <!-- data -->
             <tbody>
-              {% for berit in list %}
+              {% for berita in list %}
               <tr>
-                <td>{{berit.tanggal}}</td>
-                <td><a href="{% url 'detail-berita' %}" style="text-decoration: none; color: black;">{{berit.judul}}</a></td>
-                <td> <a href="{{link_berita}}">{{berit.link}}</a></td>
+                <td>{{berita.tanggal}}</td>
+                <td><a href="/detail_berita/{{berita.id}}" style="text-decoration: none; color: black;">{{berita.judul}}</a></td>
+                <td> <a href="{{berita.link}}">{{berita.link}}</a></td>
                 <td> 
                   <div class="d-flex justify-content-center">
-                    {% if berit.topik == 'Hiburan' %}
+                    {% if berita.kemiskinan == 1 %}
                     <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                     <label class="form-check-label" for="flexCheckDefault"></label>
                     {% else %}
@@ -181,7 +180,7 @@
                 </td>
                 <td>
                   <div class="d-flex justify-content-center">
-                    {% if berit.topik == 'Olahraga' %}
+                    {% if berita.pengangguran == 1 %}
                     <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                     <label class="form-check-label" for="flexCheckDefault"></label>
                     {% else %}
@@ -191,7 +190,7 @@
                 </td>
                 <td>
                   <div class="d-flex justify-content-center">
-                    {% if berit.topik == 'Riau' %}
+                    {% if berita.demokrasi == 1 %}
                     <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                     <label class="form-check-label" for="flexCheckDefault"></label>
                     {% else %}
@@ -201,7 +200,7 @@
                 </td>
                 <td>
                   <div class="form-check d-flex justify-content-center">
-                    {% if berit.topik == 'Nasional' %}
+                    {% if berita.inflasi == 1 %}
                     <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                     <label class="form-check-label" for="flexCheckDefault"></label>
                     {% else %}
@@ -211,7 +210,7 @@
                 </td>
                 <td>
                   <div class="form-check d-flex justify-content-center">
-                    {% if berit.topik == 'Kampar' %}
+                    {% if berita.pertumbuhan_ekonomi == 1 %}
                     <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                     <label class="form-check-label" for="flexCheckDefault"></label>
                     {% else %}

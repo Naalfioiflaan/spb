@@ -84,7 +84,7 @@
                     <div class="card d-flex shadow" style="background-color: #ECECEC;">
                         <!--judul  -->
                       <div class="row">
-                        <h3 class="ff-source-sans fw-bold ps-4 pt-3">{{judul}}</h3>
+                        <h3 class="ff-source-sans fw-bold ps-4 pt-3">{{berita.judul}}</h3>
                       </div>
                       
                       <!-- baris judul tanggal, sumber, topik -->
@@ -93,11 +93,6 @@
                           <div class="col d-flex justify-content-center fw-bold">
                               <span><iconify-icon inline icon="material-symbols:date-range"></iconify-icon></span>
                               &nbsp;Tanggal 
-                          </div>
-                          <!-- topik -->
-                          <div class="col d-flex justify-content-center fw-bold">
-                              <span><iconify-icon inline icon="material-symbols:topic"></iconify-icon></span>
-                              &nbsp;Topik</a>
                           </div>
                           <!-- sumber -->
                           <div class="col d-flex justify-content-center fw-bold">
@@ -110,23 +105,19 @@
                     <div class="row d-flex align-items-center ms-0 mt-3 mb-2">
                       <!-- tanggal -->
                       <div class="col d-flex justify-content-center">
-                          14 Mei 2023
-                      </div>
-                      <!-- topik -->
-                      <div class="col d-flex justify-content-center">
-                          Politik
+                          {{berita.tanggal}}
                       </div>
                       <!-- sumber -->
                       <div class="col d-flex justify-content-center">
-                          Riau Pos
+                          {{berita.sumber}}
                       </div>
                     </div>
                     <hr style="border: 1px solid black;">
 
                     <!-- teks berita -->
                      <div class="row ff-source-sans mx-3 mt-3 mb-5">
-                      {{teks}} <br><br> {{teks2}} <br><br> {{teks3}} <br><br> {{teks4}} <br><br> {{teks5}} <br><br> {{teks6}} <br><br> {{teks7}}
-                     </div>
+                      {{berita.isi_berita}}
+                    </div>
                     </div>
                 </div>
             </div>
@@ -151,9 +142,10 @@
                 </div>
               </div>
               <!-- checkbox pengaruh -->
+              {% if berita.kemiskinan == 1 %}
               <div class="row my-3">
                 <div class="col d-flex align-items-center">
-                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
                   <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
                 </div>
                   <div class="col d-flex align-items-center">
@@ -166,16 +158,27 @@
                   </div>
               </div>
               <!-- hapus klasifikasi -->
-              
-                <div class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D;">
-                  <div class="h-100 d-flex justify-content-center align-items-center">
-                    <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
-                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
-                      &nbsp;Hapus Klasifikasi
-                    </h6>
-                  </div>
+              <a href="/update_klasifikasi_berita/{{berita.id}}?kemiskinan=0" class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D;text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Hapus Klasifikasi
+                  </h6>
                 </div>
-              
+              </a>
+              {% else %}
+              <div class="row my-3">
+                Tidak pada klasifikasi ini
+              </div>
+              <a href="/update_klasifikasi_berita/{{berita.id}}?kemiskinan=1" class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #50B63F;text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Tambah Klasifikasi
+                  </h6>
+                </div>
+              </a>
+              {% endif %}
             </div>
 
             <!-- pengangguran -->
@@ -189,19 +192,43 @@
                 </div>
               </div>
               <!-- checkbox pengaruh -->
+              {% if berita.pengangguran == 1 %}
+              <div class="row my-3">
+                <div class="col d-flex align-items-center">
+                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                  </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                  </div>
+              </div>
+              <!-- hapus klasifikasi -->
+              <a href="/update_klasifikasi_berita/{{berita.id}}?pengangguran=0" class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D;text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Hapus Klasifikasi
+                  </h6>
+                </div>
+              </a>
+              {% else %}
               <div class="row my-3">
                 Tidak pada klasifikasi ini
               </div>
-              <!-- tambah klasifikasi -->
-                <div class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #4ECB71;">
-                  <div class="h-100 d-flex justify-content-center align-items-center">
-                    <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
-                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
-                      &nbsp;Tambah Klasifikasi
-                    </h6>
-                  </div>
+              <a href="/update_klasifikasi_berita/{{berita.id}}?penganggguran=1" class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #50B63F; text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Tambah Klasifikasi
+                  </h6>
                 </div>
-              
+              </a>
+              {% endif %}
             </div>
 
              <!-- demokrasi -->
@@ -215,35 +242,10 @@
                 </div>
               </div>
               <!-- checkbox pengaruh -->
-              <div class="row my-3">
-                Tidak pada klasifikasi ini
-              </div>
-              <!-- tambah klasifikasi -->
-                <div class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #4ECB71;">
-                  <div class="h-100 d-flex justify-content-center align-items-center">
-                    <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
-                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
-                      &nbsp;Tambah Klasifikasi
-                    </h6>
-                  </div>
-                </div>
-              
-            </div>
-
-            <!-- pertumbuhan ekonomi -->
-            <div class="card d-flex mt-3 align-items-center" style="width: 18rem; height: 10rem; background-color: #ECECEC;">
-              <!-- judul box klasifikasi -->
-              <div class="card d-flex shadow justify-content-center mt-3" style="width: 14rem; height: 2.3rem; background-color: #5183C0;">
-                <div class="h-100 d-flex justify-content-center align-items-center">
-                  <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
-                    Pertumbuhan&nbsp;Ekonomi
-                  </h5>
-                </div>
-              </div>
-              <!-- checkbox pengaruh -->
+              {% if berita.demokrasi == 1 %}
               <div class="row my-3">
                 <div class="col d-flex align-items-center">
-                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
                   <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
                 </div>
                   <div class="col d-flex align-items-center">
@@ -256,16 +258,27 @@
                   </div>
               </div>
               <!-- hapus klasifikasi -->
-              
-                <div class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D;">
-                  <div class="h-100 d-flex justify-content-center align-items-center">
-                    <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
-                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
-                      &nbsp;Hapus Klasifikasi
-                    </h6>
-                  </div>
+              <a href="/update_klasifikasi_berita/{{berita.id}}?demokrasi=0" class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D; text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Hapus Klasifikasi
+                  </h6>
                 </div>
-              
+              </a>
+              {% else %}
+              <div class="row my-3">
+                Tidak pada klasifikasi ini
+              </div>
+              <a href="/update_klasifikasi_berita/{{berita.id}}?demokrasi=1" class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #50B63F; text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Tambah Klasifikasi
+                  </h6>
+                </div>
+              </a>
+              {% endif %}
             </div>
 
             <!-- inflasi -->
@@ -279,9 +292,10 @@
                 </div>
               </div>
               <!-- checkbox pengaruh -->
+              {% if berita.inflasi == 1 %}
               <div class="row my-3">
                 <div class="col d-flex align-items-center">
-                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault" checked>
+                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
                   <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
                 </div>
                   <div class="col d-flex align-items-center">
@@ -294,15 +308,77 @@
                   </div>
               </div>
               <!-- hapus klasifikasi -->
-                <div class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D;">
-                  <div class="h-100 d-flex justify-content-center align-items-center">
-                    <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
-                    <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
-                      &nbsp;Hapus Klasifikasi
-                    </h6>
-                  </div>
+              <a href="/update_klasifikasi_berita/{{berita.id}}?inflasi=0" class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D; text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Hapus Klasifikasi
+                  </h6>
                 </div>
-              
+              </a>
+              {% else %}
+              <div class="row my-3">
+                Tidak pada klasifikasi ini
+              </div>
+              <a href="/update_klasifikasi_berita/{{berita.id}}?inflasi=1" class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #50B63F; text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Tambah Klasifikasi
+                  </h6>
+                </div>
+              </a>
+              {% endif %}
+            </div>
+
+            <!-- pertumbuhan ekonomi -->
+            <div class="card d-flex mt-3 align-items-center" style="width: 18rem; height: 10rem; background-color: #ECECEC;">
+              <!-- judul box klasifikasi -->
+              <div class="card d-flex shadow justify-content-center mt-3" style="width: 14rem; height: 2.3rem; background-color: #5183C0;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    Pertumbuhan&nbsp;Ekonomi
+                  </h5>
+                </div>
+              </div>
+              <!-- checkbox pengaruh -->
+              {% if berita.pertumbuhan_ekonomi == 1 %}
+              <div class="row my-3">
+                <div class="col d-flex align-items-center">
+                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                  </div>
+                  <div class="col d-flex align-items-center">
+                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                  </div>
+              </div>
+              <!-- hapus klasifikasi -->
+              <a href="/update_klasifikasi_berita/{{berita.id}}?pertumbuhan_ekonomi=0" class="card d-flex shadow ms-auto me-3 mt-2" style="width: 10rem; height: 2rem; background-color: #7E7D7D; text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="mdi:trash" style="font-size: 20px; color: white;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Hapus Klasifikasi
+                  </h6>
+                </div>
+              </a>
+              {% else %}
+              <div class="row my-3">
+                Tidak pada klasifikasi ini
+              </div>
+              <a href="/update_klasifikasi_berita/{{berita.id}}?pertumbuhan_ekonomi=1" class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #50B63F; text-decoration: none;">
+                <div class="h-100 d-flex justify-content-center align-items-center">
+                  <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white; text-decoration: none;"></iconify-icon></span>
+                  <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
+                    &nbsp;Tambah Klasifikasi
+                  </h6>
+                </div>
+              </a>
+              {% endif %}
             </div>
 
             <!-- tombol perbarui-->

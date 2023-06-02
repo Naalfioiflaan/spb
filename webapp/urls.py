@@ -21,10 +21,13 @@ from klasifikasi_berita import views as kb
 from kelola_pengguna import views as kp
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('detail_berita', views.detail, name='detail-berita'),
-    path('login', views.login, name='login'),
+    # path('detail_berita', views.detail, name='detail-berita'),
+    path('detail_berita/<id>/', views.detail, name='detail-berita'),
+    path('update_klasifikasi_berita/<id>/', views.update_classification, name='update-class'),
+    path('login', views.login_view, name='login'),
+    path('logout', views.logout_views, name='logout'),
     path('klasifikasi_berita', kb.klasifikasi_berita, name='klasifikasi_berita'),
     path('kelola_pengguna', kp.kelola_pengguna, name='kelola_pengguna'),
     path('kemiskinan', kb.kemiskinan, name="kemiskinan"),

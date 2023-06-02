@@ -1,5 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Berita
+from .models import BeritaKlasifikasi
+from .models import Kemiskinan
+from .models import Pengangguran
+from .models import Demokrasi
+from .models import Inflasi
+from .models import Pertumbuhan_Ekonomi
+from django.contrib.auth import authenticate, login, logout
+from .forms import FormLogin
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 # import pagination stuff
 from django.core.paginator import Paginator
@@ -7,11 +17,13 @@ from django.core.paginator import Paginator
 
 # Create your views here.
 
+@login_required(login_url=settings.LOGIN_URL)
 def index(request) :
-    berita = Berita.objects.all()
+    berita = BeritaKlasifikasi.objects.all()
+    total_berita = len(berita)
 
     # mengatur pagination
-    p = Paginator(Berita.objects.all(), 20)
+    p = Paginator(BeritaKlasifikasi.objects.all(), 20)
     page = request.GET.get('page')
     list = p.get_page(page)
 
@@ -19,7 +31,7 @@ def index(request) :
         'nama' : 'Selamat Datang',
         'user' : 'Nadira Alifia Ionendri',
         'tgl_terakhir_diambil' : '4 Mei 2023',
-        'total_berita' : 10.321,
+        'total_berita' : total_berita,
         'tgl_berita' : '2019-03-14',
         'email_user' : 'alifianadira11@gmail.com',
         'berita' : berita,
@@ -27,21 +39,82 @@ def index(request) :
     }
     return render(request, 'index.html', context)
 
-def detail(request) :
+def detail(request, id) :
+    berita = BeritaKlasifikasi.objects.get(id = id)
     context = {
         'nama' : 'Detail Berita',
         'user' : 'Nadira Alifia Ionendri',
         'email_user' : 'alifianadira11@gmail.com',
-        'judul' : 'Menteri LHK Ingatkan Pentingnya Kolaborasi dan Jaga Kelola SDA Tanah Air',
-        'teks' : 'PEKANBARU (RIAUPOS.CO) - Harga Tandan Buah Segar (TBS) kelapa sawit periode 15 sampai 21 Maret mengalami kenaikan pada setiap kelompok umur. Kenaikan terbesar terjadi pada kelompok umur 10 - 20 tahun sebesar Rp58,00/Kg dari harga pekan lalu. Sehingga harga pembelian TBS petani untuk periode satu minggu ke depan naik menjadi Rp2.947,12/Kg.',
-        'teks2' : 'Kepala Dinas Perkebunan Riau Zulfadli mengatakan, faktor penyebab naiknya harga TBS periode ini karena terjadinya kenaikan harga jual CPO dan Kernel dari perusahaan yang menjadi sumber data. Indeks K yang dipakai adalah indeks K untuk 1 bulan kedepan yaitu 91,81%, harga penjualan CPO minggu ini naik sebesar Rp68,44 dan kernel minggu ini naik sebesar Rp954,53 dari minggu lalu. ',
-        'teks3' : '"Untuk harga jual CPO, PT. Buana Wiralestari Mas menjual CPO dengan harga Rp 12.844,00/Kg dan mengalami kenaikkan harga sebesar Rp241,00/Kg dari harga minggu lalu. PT. Ramajaya Pramukti menjual CPO dengan harga Rp12.844,00/Kg dan mengalami kenaikkan harga sebesar Rp241,00/Kg dari harga minggu lalu," katanya. ',
-        'teks4' : 'Sedangkan untuk harga jual Kernel, PT. Eka Dura Indonesia menjual Kernel dengan harga Rp6.459,46/Kg dan mengalami kenaikkan harga sebesar Rp198,20/Kg dari harga minggu lalu. PT. Sari Lembah Subur menjual Kernel dengan harga Rp6.486,49/Kg harga minggu ini. ',
-        'teks5' : "\"PT. Musim Mas Batang Kulim Palm Oil Mill menjual Kernel dengan harga Rp8.330,00/Kg harga minggu ini. PTPN V Sei Buatan, PTPN V Sei Tapung, PT. Buana Wiralestari Mas, PT. Ramajaya Pramukti, tidak melakukan penjualan pada minggu ini,\" ujarnya. ",
-        'teks6' : 'Sebagaimana diketahui bersama bahwa dari minggu lalu harga TBS yang ditetapkan oleh tim mengalami kenaikan. Kenaikan harga minggu ini lebih disebabkan karena faktor kenaikan harga CPO. Sedangkan sistem tata kelola penetapan harga TBS Provinsi Riau semakin membaik.',
-        'teks7' : '"Membaiknya tata kelola penetapan harga merupakan upaya yang serius dari seluruh stake holder yang didukung oleh Pemerintah Provinsi Riau dan Kejaksaan Tinggi Riau. Komitmen bersama ini pada akhirnya tentu akan berimbas pada peningkatan pendapatan petani yang bermuara pada kesejahteraan masyarakat," ujarnya.',
+        'berita' : berita,
     }
     return render(request, 'detail_berita.html', context)
 
-def login(request) :
-    return render(request, 'login.html')
+def update_classification(request, id) :
+    berita = BeritaKlasifikasi.objects.get(id = id)
+    if (request.GET.get('kemiskinan')) :
+        berita.kemiskinan = int(request.GET.get('kemiskinan'))
+        try :
+            kemiskinan = Kemiskinan.objects.get(berita_id = id)
+        except :
+            kemiskinan = Kemiskinan(berita_id=id)
+            kemiskinan.save()
+        else :
+            kemiskinan.delete()
+    if (request.GET.get('pengangguran')) :
+        berita.pengangguran = int(request.GET.get('pengangguran'))
+        try :
+            pengangguran = Pengangguran.objects.get(berita_id = id)
+        except :
+            pengangguran = Pengangguran(berita_id=id)
+            pengangguran.save()
+        else :
+            pengangguran.delete()
+    if (request.GET.get('demokrasi')) :
+        berita.demokrasi = int(request.GET.get('demokrasi'))
+        try :
+            demokrasi = Demokrasi.objects.get(berita_id = id)
+        except :
+            demokrasi = Demokrasi(berita_id=id)
+            demokrasi.save()
+        else :
+            demokrasi.delete()
+    if (request.GET.get('inflasi')) :
+        berita.inflasi = int(request.GET.get('inflasi'))
+        try :
+            inflasi = Inflasi.objects.get(berita_id = id)
+        except :
+            inflasi = Inflasi(berita_id=id)
+            inflasi.save()
+        else :
+            inflasi.delete()
+    if (request.GET.get('pertumbuhan_ekonomi')) :
+        berita.pertumbuhan_ekonomi = int(request.GET.get('pertumbuhan_ekonomi'))
+        try :
+            pertumbuhan_ekonomi = Pertumbuhan_Ekonomi.objects.get(berita_id = id)
+        except :
+            pertumbuhan_ekonomi = Pertumbuhan_Ekonomi(berita_id=id)
+            pertumbuhan_ekonomi.save()
+        else :
+            pertumbuhan_ekonomi.delete()
+    berita.save()
+    return redirect('/detail_berita/'+id)
+
+
+def login_view(request) : 
+    form = FormLogin()
+    if request.method == 'POST' :
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+        
+    return render(request, 'login.html',{'form':form})
+
+def logout_views(request) :
+    logout(request)
+    request.session.flush()
+    return redirect('/login')
