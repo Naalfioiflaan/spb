@@ -86,12 +86,44 @@
       </div>
       <div class="row d-flex align-item-center justify-content-center">
         <div class="col-3 d-flex justify-content-center">
-          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
-            <div class="h-100 d-flex justify-content-center align-items-center">
-              <img src="{% static '/img/logo-riaupos.png'%}" alt="logo riau pos" style="width: 200px;">
+          <a href="" data-bs-toggle="modal" data-bs-target="#myModal">
+            <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+              <div class="h-100 d-flex justify-content-center align-items-center">
+                <img src="{% static '/img/logo-riaupos.png'%}" alt="logo riau pos" style="width: 200px;">
+              </div>
+            </div></a>
+          </div>
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+              <!-- heading modal -->
+              <div class="modal-header">
+                <h4 class="modal-title">Masukkan tanggal berita</h4>
+              </div>
+              <!-- body modal -->
+              <div class="modal-body">
+                <p>Silakan masukkan tanggal berita yang ingin diambil. Periode pengambilan berita ialah 7 (tujuh) hari pasca hari terakhir berita diambil.
+                Anda hanya bisa mengambil berita H+1 setelah hari terakhir diambilnya berita dan H-1 dari hari ini.</p>
+                <div class="row">
+                  <div class="col">
+                    <b>Terakhir diambil : 1 Juni 2023</b>
+                  </div>
+                  <div class="col">
+                    <p>Pilih tanggal</p>
+                  </div>
+                </div>
+              </div>
+              <!-- footer modal -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ambil Berita</button>
+              </div>
             </div>
           </div>
         </div>
+
         <div class="col-3 d-flex justify-content-center">
           <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
             <div class="h-100 d-flex justify-content-center align-items-center">

@@ -41,11 +41,50 @@ def index(request) :
 
 def detail(request, id) :
     berita = BeritaKlasifikasi.objects.get(id = id)
+    klasifikasi = {}
+    
+    # kemiskinan
+    try:
+        kemiskinan = Kemiskinan.objects.get(berita_id = id)
+    except:
+        pass
+    else:
+        klasifikasi['kemiskinan'] = kemiskinan
+    # pengangguran
+    try:
+        pengangguran = Pengangguran.objects.get(berita_id = id)
+    except:
+        pass
+    else:
+        klasifikasi['pengangguran'] = pengangguran
+    # demokrasi
+    try:
+        demokrasi = Demokrasi.objects.get(berita_id = id)
+    except:
+        pass
+    else:
+        klasifikasi['demokrasi'] = demokrasi
+    # inflasi
+    try:
+        inflasi = Inflasi.objects.get(berita_id = id)
+    except:
+        pass
+    else:
+        klasifikasi['inflasi'] = inflasi
+    # pertumbuhan_ekonomi
+    try:
+        pertumbuhan_ekonomi = Pertumbuhan_Ekonomi.objects.get(berita_id = id)
+    except:
+        pass
+    else:
+        klasifikasi['pertumbuhan_ekonomi'] = pertumbuhan_ekonomi
+
     context = {
         'nama' : 'Detail Berita',
         'user' : 'Nadira Alifia Ionendri',
         'email_user' : 'alifianadira11@gmail.com',
         'berita' : berita,
+        'klasifikasi' : klasifikasi,
     }
     return render(request, 'detail_berita.html', context)
 
@@ -56,7 +95,7 @@ def update_classification(request, id) :
         try :
             kemiskinan = Kemiskinan.objects.get(berita_id = id)
         except :
-            kemiskinan = Kemiskinan(berita_id=id)
+            kemiskinan = Kemiskinan(berita_id=id, naik=0, turun=0, tidak_ada=0)
             kemiskinan.save()
         else :
             kemiskinan.delete()
@@ -65,7 +104,7 @@ def update_classification(request, id) :
         try :
             pengangguran = Pengangguran.objects.get(berita_id = id)
         except :
-            pengangguran = Pengangguran(berita_id=id)
+            pengangguran = Pengangguran(berita_id=id, naik=0, turun=0, tidak_ada=0)
             pengangguran.save()
         else :
             pengangguran.delete()
@@ -74,7 +113,7 @@ def update_classification(request, id) :
         try :
             demokrasi = Demokrasi.objects.get(berita_id = id)
         except :
-            demokrasi = Demokrasi(berita_id=id)
+            demokrasi = Demokrasi(berita_id=id, naik=0, turun=0, tidak_ada=0)
             demokrasi.save()
         else :
             demokrasi.delete()
@@ -83,7 +122,7 @@ def update_classification(request, id) :
         try :
             inflasi = Inflasi.objects.get(berita_id = id)
         except :
-            inflasi = Inflasi(berita_id=id)
+            inflasi = Inflasi(berita_id=id, naik=0, turun=0, tidak_ada=0)
             inflasi.save()
         else :
             inflasi.delete()
@@ -92,13 +131,122 @@ def update_classification(request, id) :
         try :
             pertumbuhan_ekonomi = Pertumbuhan_Ekonomi.objects.get(berita_id = id)
         except :
-            pertumbuhan_ekonomi = Pertumbuhan_Ekonomi(berita_id=id)
+            pertumbuhan_ekonomi = Pertumbuhan_Ekonomi(berita_id=id, naik=0, turun=0, tidak_ada=0)
             pertumbuhan_ekonomi.save()
-        else :
+        else : 
             pertumbuhan_ekonomi.delete()
     berita.save()
     return redirect('/detail_berita/'+id)
 
+def perbarui_pengaruh(request, id):
+    if request.method == 'POST':
+        
+        # kemiskinan
+        try:
+            kemiskinan = Kemiskinan.objects.get(berita_id = id)
+        except:
+            pass
+        else :
+            match request.POST.get('kemiskinan'):
+                case "naik":
+                    kemiskinan.naik = 1
+                    kemiskinan.turun = 0
+                    kemiskinan.tidak_ada = 0
+                case "turun":
+                    kemiskinan.naik = 0 
+                    kemiskinan.turun = 1
+                    kemiskinan.tidak_ada = 0
+                case "tidak_ada":
+                    kemiskinan.naik = 0
+                    kemiskinan.turun = 0
+                    kemiskinan.tidak_ada = 1
+            kemiskinan.save()
+        
+        # pengangguran
+        try:
+            pengangguran = Pengangguran.objects.get(berita_id = id)
+        except:
+            pass
+        else :
+            match request.POST.get('pengangguran'):
+                case "naik":
+                    pengangguran.naik = 1
+                    pengangguran.turun = 0
+                    pengangguran.tidak_ada = 0
+                case "turun":
+                    pengangguran.naik = 0 
+                    pengangguran.turun = 1
+                    pengangguran.tidak_ada = 0
+                case "tidak_ada":
+                    pengangguran.naik = 0
+                    pengangguran.turun = 0
+                    pengangguran.tidak_ada = 1
+            pengangguran.save()
+
+        # demokrasi
+        try:
+            demokrasi = Demokrasi.objects.get(berita_id = id)
+        except:
+            pass
+        else :
+            match request.POST.get('demokrasi'):
+                case "naik":
+                    demokrasi.naik = 1
+                    demokrasi.turun = 0
+                    demokrasi.tidak_ada = 0
+                case "turun":
+                    demokrasi.naik = 0 
+                    demokrasi.turun = 1
+                    demokrasi.tidak_ada = 0
+                case "tidak_ada":
+                    demokrasi.naik = 0
+                    demokrasi.turun = 0
+                    demokrasi.tidak_ada = 1
+            demokrasi.save()
+
+        # inflasi
+        try:
+            inflasi = Inflasi.objects.get(berita_id = id)
+        except:
+            pass
+        else :
+            match request.POST.get('inflasi'):
+                case "naik":
+                    inflasi.naik = 1
+                    inflasi.turun = 0
+                    inflasi.tidak_ada = 0
+                case "turun":
+                    inflasi.naik = 0 
+                    inflasi.turun = 1
+                    inflasi.tidak_ada = 0
+                case "tidak_ada":
+                    inflasi.naik = 0
+                    inflasi.turun = 0
+                    inflasi.tidak_ada = 1
+            inflasi.save()
+        
+        # pertumbuhan_ekonomi
+        try:
+            pertumbuhan_ekonomi = Pertumbuhan_Ekonomi.objects.get(berita_id = id)
+        except:
+            pass
+        else :
+            match request.POST.get('pertumbuhan_ekonomi'):
+                case "naik":
+                    pertumbuhan_ekonomi.naik = 1
+                    pertumbuhan_ekonomi.turun = 0
+                    pertumbuhan_ekonomi.tidak_ada = 0
+                case "turun":
+                    pertumbuhan_ekonomi.naik = 0 
+                    pertumbuhan_ekonomi.turun = 1
+                    pertumbuhan_ekonomi.tidak_ada = 0
+                case "tidak_ada":
+                    pertumbuhan_ekonomi.naik = 0
+                    pertumbuhan_ekonomi.turun = 0
+                    pertumbuhan_ekonomi.tidak_ada = 1
+            pertumbuhan_ekonomi.save()
+
+    return redirect('/detail_berita/'+id)
 
 def login_view(request) : 
     form = FormLogin()

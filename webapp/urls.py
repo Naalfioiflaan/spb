@@ -26,6 +26,7 @@ urlpatterns = [
     # path('detail_berita', views.detail, name='detail-berita'),
     path('detail_berita/<id>/', views.detail, name='detail-berita'),
     path('update_klasifikasi_berita/<id>/', views.update_classification, name='update-class'),
+    path('update_pengaruh_berita/<id>/', views.perbarui_pengaruh, name='update-pengaruh'),
     path('login', views.login_view, name='login'),
     path('logout', views.logout_views, name='logout'),
     path('klasifikasi_berita', kb.klasifikasi_berita, name='klasifikasi_berita'),

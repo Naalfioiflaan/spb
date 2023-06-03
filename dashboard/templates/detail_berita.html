@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,7 +117,11 @@
 
                     <!-- teks berita -->
                      <div class="row ff-source-sans mx-3 mt-3 mb-5">
-                      {{berita.isi_berita}}
+                      {% with berita.isi_berita|split_into_paragraphs as paragraphs %}
+                          {% for paragraph in paragraphs %}
+                              <p style="text-align: justify;">{{ paragraph }}</p>
+                          {% endfor %}
+                      {% endwith %}
                     </div>
                     </div>
                 </div>
@@ -124,6 +129,8 @@
 
           <!-- kolom opsi klasifikasi -->
           <div class="col-3 mt-4 ps-3">
+            <form action="/update_pengaruh_berita/{{berita.id}}/" method="post">
+              {% csrf_token %}
             <div class="card d-flex shadow" style="width: 18rem; height: 2.3rem; background-color: #1177C2;">
               <div class="h-100 d-flex justify-content-center align-items-center">
                 <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
@@ -145,16 +152,19 @@
               {% if berita.kemiskinan == 1 %}
               <div class="row my-3">
                 <div class="col d-flex align-items-center">
-                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                  <input class="form-check-input m-0" type="radio" name="kemiskinan" value="naik" id="kemiskinan_naik"
+                  {% if klasifikasi.kemiskinan.naik == 1 %} checked {% endif %}>
+                  <label class="form-check-label" for="kemiskinan_naik">&nbsp;Naik</label>
                 </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                    <input class="form-check-input m-0" type="radio" name="kemiskinan" value="turun" id="kemiskinan_turun"
+                    {% if klasifikasi.kemiskinan.turun == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="kemiskinan_turun">&nbsp;Turun</label>
                   </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                    <input class="form-check-input m-0" type="radio" name="kemiskinan" value="tidak_ada" id="kemiskinan_tdk"
+                    {% if klasifikasi.kemiskinan.tidak_ada == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="kemiskinan_tdk">&nbsp;Tidak&nbsp;Ada</label>
                   </div>
               </div>
               <!-- hapus klasifikasi -->
@@ -195,16 +205,19 @@
               {% if berita.pengangguran == 1 %}
               <div class="row my-3">
                 <div class="col d-flex align-items-center">
-                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                  <input class="form-check-input m-0" type="radio" name="pengangguran" value="naik" id="pengangguran_naik"
+                  {% if klasifikasi.pengangguran.naik == 1 %} checked {% endif %}>
+                  <label class="form-check-label" for="pengangguran_naik">&nbsp;Naik</label>
                 </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                    <input class="form-check-input m-0" type="radio" name="pengangguran" value="turun" id="pengangguran_turun"
+                    {% if klasifikasi.pengangguran.turun == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="pengangguran_turun">&nbsp;Turun</label>
                   </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                    <input class="form-check-input m-0" type="radio" name="pengangguran" value="tidak_ada" id="pengangguran_tdk"
+                    {% if klasifikasi.pengangguran.tidak_ada == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="pengangguran_tdk">&nbsp;Tidak&nbsp;Ada</label>
                   </div>
               </div>
               <!-- hapus klasifikasi -->
@@ -220,7 +233,7 @@
               <div class="row my-3">
                 Tidak pada klasifikasi ini
               </div>
-              <a href="/update_klasifikasi_berita/{{berita.id}}?penganggguran=1" class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #50B63F; text-decoration: none;">
+              <a href="/update_klasifikasi_berita/{{berita.id}}?pengangguran=1" class="card d-flex justify-content-center align-items-center shadow" style="width: 11rem; height: 2rem; background-color: #50B63F; text-decoration: none;">
                 <div class="h-100 d-flex justify-content-center align-items-center">
                   <span><iconify-icon inline icon="material-symbols:add-circle-rounded" style="font-size: 20px; color: white;"></iconify-icon></span>
                   <h6 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
@@ -245,16 +258,19 @@
               {% if berita.demokrasi == 1 %}
               <div class="row my-3">
                 <div class="col d-flex align-items-center">
-                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                  <input class="form-check-input m-0" type="radio" name="demokrasi" value="naik" id="demokrasi_naik"
+                  {% if klasifikasi.demokrasi.naik == 1 %} checked {% endif %}>
+                  <label class="form-check-label" for="demokrasi_naik">&nbsp;Naik</label>
                 </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                    <input class="form-check-input m-0" type="radio" name="demokrasi" value="turun" id="demokrasi_turun"
+                    {% if klasifikasi.demokrasi.turun == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="demokrasi_turun">&nbsp;Turun</label>
                   </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                    <input class="form-check-input m-0" type="radio" name="demokrasi" value="tidak_ada" id="demokrasi_tdk"
+                    {% if klasifikasi.demokrasi.tidak_ada == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="demokrasi_tdk">&nbsp;Tidak&nbsp;Ada</label>
                   </div>
               </div>
               <!-- hapus klasifikasi -->
@@ -295,16 +311,19 @@
               {% if berita.inflasi == 1 %}
               <div class="row my-3">
                 <div class="col d-flex align-items-center">
-                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                  <input class="form-check-input m-0" type="radio" name="inflasi" value="naik" id="inflasi_naik"
+                  {% if klasifikasi.inflasi.naik == 1 %} checked {% endif %}>
+                  <label class="form-check-label" for="inflasi_naik">&nbsp;Naik</label>
                 </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                    <input class="form-check-input m-0" type="radio" name="inflasi" value="turun" id="inflasi_turun"
+                    {% if klasifikasi.inflasi.turun == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="inflasi_turun">&nbsp;Turun</label>
                   </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                    <input class="form-check-input m-0" type="radio" name="inflasi" value="tidak_ada" id="inflasi_tdk"
+                    {% if klasifikasi.inflasi.tidak_ada == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="inflasi_tdk">&nbsp;Tidak&nbsp;Ada</label>
                   </div>
               </div>
               <!-- hapus klasifikasi -->
@@ -345,16 +364,19 @@
               {% if berita.pertumbuhan_ekonomi == 1 %}
               <div class="row my-3">
                 <div class="col d-flex align-items-center">
-                  <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">&nbsp;Naik</label>
+                  <input class="form-check-input m-0" type="radio" name="pertumbuhan_ekonomi" value="naik" id="pertumbuhan_ekonomi_naik"
+                  {% if klasifikasi.pertumbuhan_ekonomi.naik == 1 %} checked {% endif %}>
+                  <label class="form-check-label" for="pertumbuhan_ekonomi_naik">&nbsp;Naik</label>
                 </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Turun</label>
+                    <input class="form-check-input m-0" type="radio" name="pertumbuhan_ekonomi" value="turun" id="pertumbuhan_ekonomi_turun"
+                    {% if klasifikasi.pertumbuhan_ekonomi.turun == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="pertumbuhan_ekonomi_turun">&nbsp;Turun</label>
                   </div>
                   <div class="col d-flex align-items-center">
-                    <input class="form-check-input m-0" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">&nbsp;Tidak&nbsp;Ada</label>
+                    <input class="form-check-input m-0" type="radio" name="pertumbuhan_ekonomi" value="tidak_ada" id="pertumbuhan_ekonomi_tdk"
+                    {% if klasifikasi.pertumbuhan_ekonomi.tidak_ada == 1 %} checked {% endif %}>
+                    <label class="form-check-label" for="pertumbuhan_ekonomi_tdk">&nbsp;Tidak&nbsp;Ada</label>
                   </div>
               </div>
               <!-- hapus klasifikasi -->
@@ -382,14 +404,14 @@
             </div>
 
             <!-- tombol perbarui-->
-            <a href="" style="text-decoration: none;"><div class="card d-flex shadow ms-auto me-4 mt-4" style="width: 6rem; height: 2.3rem; background-color: #033559;">
+            <button type="submit" class="card d-flex shadow ms-auto me-4 mt-4" style="width: 6rem; height: 2.3rem; background-color: #033559;">
               <div class="h-100 d-flex justify-content-center align-items-center">
                 <h5 class="ff-source-sans text-light mb-0" style="font-weight: 700;">
                   Perbarui
                 </h5>
               </div>
-            </div></a>
-
+            </button>
+          </form>
           </div>
         </div>
         
