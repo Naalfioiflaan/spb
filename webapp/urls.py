@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('ambil_riau_pos', views.ambil_riaupos, name='ambil-riau-pos'),
+    path('ambil_haluan_riau', views.ambil_haluanriau, name='ambil-haluan-riau'),
     # path('detail_berita', views.detail, name='detail-berita'),
     path('detail_berita/<id>/', views.detail, name='detail-berita'),
     path('update_klasifikasi_berita/<id>/', views.update_classification, name='update-class'),

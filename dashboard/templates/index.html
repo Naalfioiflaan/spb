@@ -17,6 +17,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
 </head>
 <body>
+  <!-- Loading -->
+  <div id="loading" class="overflow-hidden d-none position-fixed d-flex justify-content-center align-items-center vh-100 vw-100" style="z-index: 1200; background-color: rgba(0, 0, 0, 0.5)">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <img src="{% static '/img/loading-icon.png'%}" alt="">
+      <h3 class="text-light">Loading Scraping and Classifying News...</h3>
+    </div>
+  </div>
+
     <!-- header -->
         <div class="bg-color-blue bg-body-tertiary ff-source-sans" >
             <!-- navbar -->
@@ -92,15 +100,16 @@
         <h2 class="ff-source-sans text-dark text-center" style="font-weight: 600;">Ambil Berita</h2>
       </div>
       <div class="row d-flex align-item-center justify-content-center">
+        <!-- Riau Pos -->
         <div class="col-3 d-flex justify-content-center">
-            <a href="" data-bs-toggle="modal" data-bs-target="#myModal" class="card pe-auto d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+            <a href="" data-bs-toggle="modal" data-bs-target="#modalRiauPos" class="card pe-auto d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
               <div class="h-100 d-flex justify-content-center align-items-center">
                 <img src="{% static '/img/logo-riaupos.png'%}" alt="logo riau pos" style="width: 200px;">
               </div>
             </a>
         </div>
         <!-- Modal untuk mengambil tanggal RiauPos-->
-        <div id="myModal" class="modal fade" role="dialog">
+        <div id="modalRiauPos" class="modal fade" role="dialog">
           <div class="modal-dialog modal-dialog-centered modal-lg">
             <!-- konten modal-->
             <div class="modal-content">
@@ -109,7 +118,7 @@
                 <h4 class="modal-title">Masukkan tanggal berita</h4>
               </div>
               <!-- body modal -->
-              <form action="/ambil_riau_pos" method="post">
+              <form action="/ambil_riau_pos" method="post" onsubmit="showLoading()">
                 {% csrf_token %}
               <div class="modal-body">
                 <p>Silakan masukkan tanggal berita yang ingin diambil. Periode pengambilan berita ialah 7 (tujuh) hari pasca hari terakhir berita diambil.
@@ -154,14 +163,72 @@
             </div>
           </div>
         </div>
+
+        <!-- Haluan Riau -->
         <div class="col-3 d-flex justify-content-center">
-          <a href="" data-bs-toggle="modal" data-bs-target="#myModal">
-          <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
+          <a href="" data-bs-toggle="modal" data-bs-target="#modalHaluanRiau" class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;" >
             <div class="h-100 d-flex justify-content-center align-items-center">
               <img src="{% static '/img/logo-haluanriau.png'%}" alt="logo riau pos" style="width: 200px;">
             </div>
-          </div></a>
+          </a>
         </div>
+         <!-- Modal untuk mengambil tanggal Haluan Riau-->
+         <div id="modalHaluanRiau" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+              <!-- heading modal -->
+              <div class="modal-header">
+                <h4 class="modal-title">Masukkan tanggal berita</h4>
+              </div>
+              <!-- body modal -->
+              <form action="/ambil_haluan_riau" method="post" onsubmit="showLoading()">
+                {% csrf_token %}
+              <div class="modal-body">
+                <p>Silakan masukkan tanggal berita yang ingin diambil. Periode pengambilan berita ialah 7 (tujuh) hari pasca hari terakhir berita diambil.
+                  Anda hanya bisa mengambil berita H+1 setelah hari terakhir diambilnya berita dan H-1 dari hari ini.</p>
+                <div class="row">
+                  <div class="col">
+                    <b>Terakhir diambil : {{hr_tgl_terakhir_diambil}}</b>
+                  </div>
+                  <div class="col">
+                    <p>Pilih Tanggal : </p>
+                    <div
+                      class="input-group"
+                      id="haluanriauDatePicker"
+                      data-td-target-input="nearest"
+                      data-td-target-toggle="nearest"
+                    >
+                      <input
+                        id="haluanriauDatePickerInput"
+                        type="text"
+                        class="form-control"
+                        data-td-target="#haluanriauDatePicker"
+                        name="tgl_akhir"
+                      />
+                      <span
+                        class="input-group-text"
+                        data-td-target="#haluanriauDatePicker"
+                        data-td-toggle="datetimepicker"
+                      >
+                        <span class="fa-solid fa-calendar"></span>
+                      </span>
+                      <input id="hr_tgl_awal" type="text" class="d-none" name="tgl_awal">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- footer modal -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-primary">Ambil Berita</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goriau -->
         <div class="col-3 d-flex justify-content-center">
           <a href="" data-bs-toggle="modal" data-bs-target="#myModal">
           <div class="card d-flex shadow" style="width: 15rem; height: 5rem; background-color: #ECECEC;">
@@ -325,60 +392,16 @@
 
   <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'jquery.min.js' %}"></script>
+  <script src="{% static 'home.js' %}"
+          defer
+          data-rp-tgl="{{ rp_tgl_terakhir_diambil }}"
+          data-hr-tgl="{{ hr_tgl_terakhir_diambil }}"></script>
   <!-- Popperjs -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
   <!-- Tempus Dominus JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
   <script>
-    function getDatesInRange(startDate) {
-      const date = startDate;
-      date.setDate(date.getDate()+1)
-      const dates = [];
-
-      const endDate = new Date()
-      endDate.setHours(0, 0, 0, 0)
-
-      while (date < endDate) {
-        const tgl = new Date(date)
-        dates.push(tgl);
-        date.setDate(date.getDate() + 1);
-      }
-
-      return dates;
-    }
-
-    const rp_tgl_terakhir = new Date('{{rp_tgl_terakhir_diambil}}');
-    const rp_tgl_default = rp_tgl_terakhir;
-    rp_tgl_default.setDate(rp_tgl_default.getDate() + 1);
-    const rp_tgl_awal = rp_tgl_default.toISOString().substring(0, 10);
-    document.getElementById('rp_tgl_awal').value = rp_tgl_awal
-    new tempusDominus.TempusDominus(
-      document.getElementById('riauposDatePicker'),
-      {
-        allowInputToggle: true,
-        useCurrent: false,
-        defaultDate: rp_tgl_default,
-        restrictions: {
-          enabledDates: getDatesInRange(new Date('{{rp_tgl_terakhir_diambil}}')),
-        },
-        display: {
-          components: {
-            clock: false,
-          },
-          theme: 'light',
-          placement: 'top',
-        },
-        localization: {
-          dateFormats: {
-            L: 'yyyy-MM-dd',
-            LT: 'MMM dd, yyyy'
-          },
-          format: 'yyyy-MM-dd',
-        },
-      }
-    );
-    
     const input = document.getElementById('page-input');
     input.addEventListener('input', function() {
       input.addEventListener('keyup', function(event) {

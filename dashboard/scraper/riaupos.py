@@ -26,6 +26,7 @@ def scrap(tgl_awal, tgl_akhir):
     cursor = db.cursor()
 
     # mengambil data
+    # for i in range(1, 7, 6): 
     for i in range(1, 88922, 6): 
         print('==== PAGE ' + str(i) + ' ====')
         url = 'https://riaupos.jawapos.com/more/scrollimg.php?urutimg='+str(i)
