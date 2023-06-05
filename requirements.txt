@@ -1,0 +1,14 @@
+beautifulsoup4==4.11.2
+html5lib==1.1
+lxml==4.9.2
+mysql-connector-python==8.0.32
+nltk==3.8.1
+numpy==1.24.2
+pandas==1.5.3
+requests==2.28.2
+Sastrawi==1.0.1
+scikit-learn==1.2.2
+selenium==4.8.2
+stopword==0.0.4
+urllib3==1.26.15
+webdriver-manager==3.8.5

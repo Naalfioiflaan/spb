@@ -6,6 +6,7 @@ from .models import Pengangguran
 from .models import Demokrasi
 from .models import Inflasi
 from .models import Pertumbuhan_Ekonomi
+from .scraper import riaupos as rp
 from django.contrib.auth import authenticate, login, logout
 from .forms import FormLogin
 from django.contrib.auth.decorators import login_required
@@ -19,18 +20,20 @@ from django.core.paginator import Paginator
 
 @login_required(login_url=settings.LOGIN_URL)
 def index(request) :
-    berita = BeritaKlasifikasi.objects.all()
+    berita = BeritaKlasifikasi.objects.order_by('-tanggal')
+    rp_first_row = BeritaKlasifikasi.objects.filter(sumber="Riau Pos").order_by('-tanggal').first()
+
     total_berita = len(berita)
 
     # mengatur pagination
-    p = Paginator(BeritaKlasifikasi.objects.all(), 20)
+    p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
 
     context = {
         'nama' : 'Selamat Datang',
         'user' : 'Nadira Alifia Ionendri',
-        'tgl_terakhir_diambil' : '4 Mei 2023',
+        'rp_tgl_terakhir_diambil' : rp_first_row.tanggal,
         'total_berita' : total_berita,
         'tgl_berita' : '2019-03-14',
         'email_user' : 'alifianadira11@gmail.com',
@@ -38,6 +41,15 @@ def index(request) :
         'list' : list
     }
     return render(request, 'index.html', context)
+
+def ambil_riaupos(request):
+    if request.method == 'POST':
+        tgl_awal = request.POST.get('tgl_awal')
+        print(tgl_awal)
+        tgl_akhir = request.POST.get('tgl_akhir')
+        print(tgl_akhir)
+        rp.scrap(tgl_awal, tgl_akhir)
+    return redirect('/')
 
 def detail(request, id) :
     berita = BeritaKlasifikasi.objects.get(id = id)
