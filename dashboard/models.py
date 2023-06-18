@@ -41,6 +41,8 @@ class BeritaKlasifikasi(models.Model):
         db_column='inflasi', blank=True, null=True)
     pertumbuhan_ekonomi = models.IntegerField(
         db_column='pertumbuhan_ekonomi', blank=True, null=True)
+    status = models.CharField(
+       db_column='status', max_length=30, blank=True, null=True)
 
     class Meta:
         managed = False

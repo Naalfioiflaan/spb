@@ -8,6 +8,14 @@
     <title>Pertumbuhan Ekonomi</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'main.css' %}">
+    <!-- Font awesome is not required provided you change the icon options -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/solid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/fontawesome.min.js"></script>
+    <!-- end FA -->
+    <!-- Tempus Dominus Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+    <!-- chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js" integrity="sha512-mlz/Fs1VtBou2TrUkGzX4VoGvybkD9nkeXWJm3rle0DPHssYYx4j+8kIS15T78ttGfmOjH0lLaBXGcShaVkdkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
@@ -21,6 +29,7 @@
                         <a href="#" class="pull-left mt-2"><img src="{% static '/img/logo_bps.png'%}" alt="logo_bps" style="width: 250px;"></a> 
                     </div>
                     <div class="col-6 navbar d-flex justify-content-center">
+                      {% if user.is_staff %}
                       <ul class="nav nav-pills text-light">
                         <li class="nav-item">
                             <a class="nav-link text-light" href="{% url 'index' %}">
@@ -38,19 +47,24 @@
                               &nbsp;Kelola Pengguna</a>
                           </li>
                       </ul>
+                      {% endif %}
                     </div>
                     <div class="col-3 px-4">
                       <div class="dropdown d-flex justify-content-end align-items-center">
                         <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
                         <a class="dropdown-toggle text-light" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Nadira
+                          {{user.username}}
                         </a>
                         <ul class="dropdown-menu shadow">
                           <li style="text-align: center; margin-top: 8px; margin-bottom: 5px"><img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 3rem; height: 3rem;"></li>
-                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user}}</a></li>
-                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{email_user}}</a></li>
+                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user.username}}</a></li>
+                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{user.email}}</a></li>
                           <li style="text-align: center;"><a class="dropdown-item">
+                            {% if user.is_staff %}
                             <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
+                            {% else %}
+                            <div class="btn btn-warning rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">User</div></a>
+                            {% endif %}
                           </li>
                           <hr class="mt-2 mb-2 my-1">
                           <li>
@@ -88,20 +102,107 @@
       </div>
   
       <!-- baris chart -->
-      <div class="container-fluid">
-          <div class="row mt-4">
-              <div class="col-4 ms-3">
-                  <div class="card h-100 py-3 ps-4 shadow" style="width: rem; height: 5rem; background-color: #ECECEC;">
-                      <p class="ff-source-sans text-dark m-0 text-start" style="font-weight: 700;" >Persentase Jumlah Pengaruh Berita Pertumbuhan Ekonomi</p>
-                  </div>
-              </div>
-              <div class="col me-3">
-                  <div class="card h-100 py-3 ps-4 shadow" style="width: rem; height: 5rem; background-color: #ECECEC;">
-                      <p class="ff-source-sans text-dark m-0 text-center" style="font-weight: 700;" >Grafik jumlah Pengaruh Berita Pertumbuhan Ekonomi</p>
-                  </div>
-              </div>
-          </div>
-      </div>
+  <div class="container-fluid">
+    <div class="row mt-4 mx-3">
+        <div class="col-4 p-0">
+            <div class="card h-100 py-3 shadow w-100" style="height: 5rem; background-color: #ECECEC;">
+                <p class="ff-source-sans text-dark m-0 text-center" style="font-weight: 700;" >Persentase Jumlah Pengaruh Berita Pengangguran</p>
+                <div class="chart-container mt-3 me-0" style="position: relative; height: 85%;">
+                  <canvas id="myChart1"></canvas>
+                </div>
+                
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                
+                <script>
+                  const ct = document.getElementById('myChart1');
+                
+                  new Chart(ct, {
+                    type: 'pie',
+                    data: {
+                      labels: [{% for pengaruh in list_pengaruh %} '{{pengaruh}}',{% endfor %}],
+                      datasets: [{
+                        label: 'Pengaruh',
+                        data: [{% for jumlah in jlh_pengaruh %} '{{jumlah}}',{% endfor %}],
+                        borderWidth: 1,
+                        backgroundColor : [
+                          'rgb(54, 162, 235)','rgb(255, 99, 132)','rgb(201, 203, 207)',
+                        ]
+                      }]
+                    },
+                    options: {
+                      responsive:true,
+                      maintainAspectRatio:false,
+                    }
+                  });
+                </script>
+                 
+            </div>
+        </div>
+        <div class="col-8 pe-0">
+            <div class="card h-100 py-3 ps-4 w-100 shadow" style="width:50rem; height: 5rem; background-color: #ECECEC;">
+                <p class="ff-source-sans text-dark m-0 text-center" style="font-weight: 700;" >Grafik jumlah Pengaruh Berita Pertumbuhan Ekonomi</p>
+                <div class="chart-container" style="position: relative; width: 59vw; height:50vh">
+                  <canvas id="myChart2"></canvas>
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                
+                <script>
+                  const ctx = document.getElementById('myChart2');
+                
+                  new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                      labels: [
+                        'January',
+                        'February',
+                        'March',
+                        'April',
+                        'May',
+                        'June',
+                        'July',
+                        'August',
+                        'September',
+                        'October',
+                        'November',
+                        'December'
+                      ],
+                      datasets: [
+                        {
+                          label: 'Naik',
+                          data: [{% for jumlah in naik_bulan %} '{{jumlah}}',{% endfor %}],
+                          borderColor: 'rgb(54, 162, 235)',
+                          backgroundColor: 'rgb(54, 162, 235)'
+                        },
+                        {
+                          label: 'Turun',
+                          data: [{% for jumlah in turun_bulan %} '{{jumlah}}',{% endfor %}],
+                          borderColor: 'rgb(255, 99, 132)',
+                          backgroundColor: 'rgb(255, 99, 132)'
+                        },
+                        {
+                          label: 'Tidak ada',
+                          data: [{% for jumlah in tidak_ada_bulan %} '{{jumlah}}',{% endfor %}],
+                          borderColor: 'rgb(190, 192, 196)',
+                          backgroundColor: 'rgb(190, 192, 196)'
+                        }
+                      ],
+                    },
+                    options: {
+                      maintainAspectRatio: false,
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                          relative: true,
+                          stacked: false,
+                        }
+                      }
+                    }
+                  });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
   
       <!-- tabel -->
       <div class="container-fluid">
@@ -135,14 +236,14 @@
               </thead>
               <!-- data -->
               <tbody>
-              {% for berit in list %}
+              {% for berita in list %}
               <tr>
-                  <td>{{berit.tanggal}}</td>
-                  <td>{{berit.judul}}</td>
-                  <td> <a href="{{link_berita}}">{{berit.link}}</a></td>
+                  <td>{{berita.tanggal}}</td>
+                  <td><a href="/detail_berita/{{berita.berita_id}}" style="text-decoration: none; color: black;">{{berita.judul}}</a></td>
+                  <td><a href="{{berita.link}}">{{berita.link}}</a></td>
                   <td> 
                   <div class="d-flex justify-content-center">
-                      {% if berit.topik == 'Hiburan' %}
+                      {% if berita.naik == 1 %}
                       <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                       <label class="form-check-label" for="flexCheckDefault"></label>
                       {% else %}
@@ -152,7 +253,7 @@
                   </td>
                   <td>
                   <div class="d-flex justify-content-center">
-                      {% if berit.topik == 'Olahraga' %}
+                      {% if berita.turun == 1 %}
                       <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                       <label class="form-check-label" for="flexCheckDefault"></label>
                       {% else %}
@@ -162,7 +263,7 @@
                   </td>
                   <td>
                   <div class="d-flex justify-content-center">
-                      {% if berit.topik == 'Riau' %}
+                      {% if berita.tidak_ada == 1 %}
                       <input class="form-check-input text-center" type="checkbox" value="" id="flexCheckDefault" checked readonly disabled>
                       <label class="form-check-label" for="flexCheckDefault"></label>
                       {% else %}
@@ -213,11 +314,63 @@
       <!-- button export -->
       <div class="container-fluid">
           <div class="d-flex justify-content-end ">
-              <button class="btn me-3 mt-4 fw-bold mb-4" type="button" style="color: #198754; background-color: #ECECEC; border-width: 2px; border-color: #198754;">Export to Excel</button>
+              <button class="btn me-3 mt-4 fw-bold mb-4" data-bs-toggle="modal" data-bs-target="#modalexport_pertumbuhan_ekonomi" type="button" style="color: #198754; background-color: #ECECEC; border-width: 2px; border-color: #198754;">Export to Excel</button>
             </div>
       </div>
+
+      <!-- Modal untuk mengambil tanggal Export File-->
+      <div id="modalexport_pertumbuhan_ekonomi" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <!-- konten modal-->
+          <div class="modal-content">
+            <!-- heading modal -->
+            <div class="modal-header">
+              <h4 class="modal-title">Masukkan tanggal berita</h4>
+            </div>
+            <!-- body modal -->
+            <form action="/export_pertumbuhan_ekonomi" method="post">
+              {% csrf_token %}
+            <div class="modal-body">
+              <p>Silakan masukkan tanggal berita yang ingin diexport.</p>
+              <p><b>Batas awal tanggal berita : {{first_berita.tanggal}}</b></p>
+              <div class="row">
+                <div class="col">
+                  <p>Pilih Tanggal : </p>
+                  <div
+                    class="input-group"
+                    id="pertumbuhan-ekonomi-DatePicker"
+                    data-td-target-input="nearest"
+                    data-td-target-toggle="nearest"
+                  >
+                    <input
+                      id="pertumbuhan-ekonomi-DatePickerInput"
+                      type="text"
+                      class="form-control"
+                      data-td-target="#pertumbuhan-ekonomi-DatePicker"
+                      name="tgl"
+                    />
+                    <span
+                      class="input-group-text"
+                      data-td-target="#pertumbuhan-ekonomi-DatePicker"
+                      data-td-toggle="datetimepicker"
+                    >
+                      <span class="fa-solid fa-calendar"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- footer modal -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">Tutup</button>
+              <button type="submit" class="btn btn-success">Export to Excel</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
   
-      <!-- card website berita -->
+      <!-- card website beritaa -->
       <div class="container-fluid">
           <div class="row align-item-center mt-5 mb-2">
             <h4 class="ff-source-sans text-dark text-center" style="font-weight: 600;">Sumber Website Berita</h4>
@@ -262,6 +415,52 @@
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+    <!-- Tempus Dominus JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
+    <script>
+      function getDatesInRange(startDate, endDate) {
+        const date = startDate;
+        const dates = [];
+
+        while (date <= endDate) {
+            const tgl = new Date(date)
+            dates.push(tgl);
+            date.setDate(date.getDate() + 1);
+        }
+
+        return dates;
+      }
+
+      console.log('{{first_berita.tanggal}}')
+
+      new tempusDominus.TempusDominus(
+        document.getElementById('pertumbuhan-ekonomi-DatePicker'),
+        {
+            allowInputToggle: true,
+            useCurrent: false,
+            dateRange: true,
+            defaultDate: new Date('{{ first_berita.tanggal }}'),
+            multipleDatesSeparator: ' s/d ',
+            restrictions: {
+            enabledDates: getDatesInRange(new Date('{{ first_berita.tanggal }}'), new Date('{{ last_berita.tanggal }}')),
+            },
+            display: {
+            components: {
+                clock: false,
+            },
+            theme: 'light',
+            placement: 'top',
+            },
+            localization: {
+            dateFormats: {
+                L: 'yyyy-MM-dd',
+                LT: 'MMM dd, yyyy'
+            },
+            format: 'yyyy-MM-dd',
+            },
+        }
+        );
+    </script>
     <script>
       const input = document.getElementById('page-input');
       input.addEventListener('input', function() {

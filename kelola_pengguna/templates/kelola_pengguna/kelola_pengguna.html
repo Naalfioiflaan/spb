@@ -43,12 +43,12 @@
                       <div class="dropdown d-flex justify-content-end align-items-center">
                         <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
                         <a class="dropdown-toggle text-light" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Nadira
+                          {{user.username}}
                         </a>
                         <ul class="dropdown-menu shadow">
                           <li style="text-align: center; margin-top: 8px; margin-bottom: 5px"><img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 3rem; height: 3rem;"></li>
-                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user}}</a></li>
-                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{email_user}}</a></li>
+                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user.username}}</a></li>
+                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{user.username}}</a></li>
                           <li style="text-align: center;"><a class="dropdown-item">
                             <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
                           </li>
@@ -117,52 +117,51 @@
               <tbody>
                 <tr class="ff-source-sans" style="color: #807B7B; font-size: 14px; background-color: #E6E6E6 !important;">
                     <td>
-                        Menampilkan 2 dari Total 20 Pengguna
+                        Menampilkan 2 dari Total {{total_pengguna}} Pengguna
                     </td>
                     <td></td><td></td><td></td>
                 </tr>
-                <tr class="ff-source-sans" style="font-size: 20px;">
-                  <td>
+                {%for pengguna in list %}
+                <tr class="ff-source-sans">
+                  <td >
                     <div class="row">
-                        <div class="col-1 ms-3 d-flex align-items-center">
+                        <div class="col-2 ms-3 d-flex align-items-center">
                             <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
                         </div>
                         <div class="col ms-3">
-                            Nadira Alifia Ionendri
-                    <br> <a href="" style="color: #777777; text-decoration: none;">alifianadira11@gmail.com </a>
+                          <p class="m-0" style="font-size: 1rem;">
+                            {{pengguna.username}}
+                          </p>
+                        <a href="" style="color: #777777; text-decoration: none; font-size: 1rem;">{{pengguna.email}}</a>
                         </div>
                     </div>
                   </td>
                   <td class="pt-3">
-                    <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 12px;">Admin</div>
+                    {% if pengguna.is_staff %}
+                    <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
+                    {% else %}
+                    <div class="btn btn-warning rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">User</div></a>
+                    {% endif %}
                   </td>
-                  <td class="align-items-center pt-4">
-                    <span><iconify-icon inline icon="material-symbols:settings" style="font-size:16px;"></iconify-icon></span>&nbsp;Ubah Status</td>
-                    <td class="align-items-center pt-4">
-                    <span><iconify-icon inline icon="ic:baseline-remove-circle" style="font-size:17px;"></iconify-icon></span>&nbsp;Hapus Pengguna</td>
-                  </td>
-                </tr>
-                <tr class="ff-source-sans" style="font-size: 20px;">
-                  <td>
-                    <div class="row">
-                        <div class="col-1 ms-3 d-flex align-items-center">
-                            <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
-                        </div>
-                        <div class="col ms-3">
-                            Nadira Alifia Ionendri
-                    <br> <a href="" style="color: #777777; text-decoration: none;">alifianadira11@gmail.com </a>
-                        </div>
+                  <td class="align-items-center pt-3">
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                        <span><iconify-icon inline icon="material-symbols:settings" style="font-size:16px;"></iconify-icon></span>
+                        &nbsp;Ubah Status</button>
+                      <ul class="dropdown-menu" style="background-color: #ECECEC">
+                        <li><a class="dropdown-item" href="/update_status_pengguna/{{pengguna.id}}?is_staff=1">Admin</a></li>
+                        <li><a class="dropdown-item" href="/update_status_pengguna/{{pengguna.id}}?is_staff=0">User</a></li>
+                      </ul>
                     </div>
-                  </td>
-                  <td class="pt-3">
-                    <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 12px;">Admin</div>
-                  </td>
-                  <td class="align-items-center pt-4">
-                    <span><iconify-icon inline icon="material-symbols:settings" style="font-size:16px;"></iconify-icon></span>&nbsp;Ubah Status</td>
+                    </td>
                     <td class="align-items-center pt-4">
-                    <span><iconify-icon inline icon="ic:baseline-remove-circle" style="font-size:17px;"></iconify-icon></span>&nbsp;Hapus Pengguna</td>
+                      <a href="/remove_pengguna/{{pengguna.id}}/" style="font-size: 1rem; text-decoration: none; color: black;">
+                        <span><iconify-icon inline icon="ic:baseline-remove-circle" style="font-size:18px;"></iconify-icon></span>
+                        &nbsp;Hapus Pengguna
+                        </a>
                   </td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -171,32 +170,37 @@
 
     <!-- Pagination -->
     <div class="container-fluid">
-        <nav class="ff-source-sans me-5 pe-5" aria-label="Page navigation example" style="font-weight:600;">
-          <ul class="pagination justify-content-end" id="pagination">
-            <li class="page-item"><a class="page-link" href="#">Awal</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+      <nav class="ff-source-sans me-3" aria-label="Page navigation example" style="font-weight:600;">
+          <ul class="pagination h-100 align-items-center justify-content-end" id="pagination">
+          <li class="page-item h-100"><a class="page-link h-100" href="?page=1">Awal</a></li>
+          {% if list.has_previous %}
+          <li class="page-item h-100">
+              <a class="page-link h-100" href="?page={{list.previous_page_number}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
               </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">...</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
+          </li>
+          {% endif %}
+          <li class="page-item h-100">
+              <label class="page-link h-100" style="font-size: .78rem;">Page 
+              <input class="page-input" type="text" id="page-input" value="{{list.number}}"/>
+              of {{list.paginator.num_pages}}
+              </label>
+          </li>
+          {% if list.has_next %}
+          <li class="page-item h-100">
+              <a class="page-link h-100" href="?page={{list.next_page_number}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
               </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">Akhir</a></li>
+          </li>
+          {% endif %}
+          <li class="page-item h-100"><a class="page-link h-100" href="?page={{list.paginator.num_pages}}">Akhir</a></li>
           </ul>
-        </nav>
+      </nav>
       </div>
   
       <!-- footer -->
       <div class="text-center mt-5 mb-3 ff-source-sans pt-5" style="color: #777777 ;">
-      Magang MBKM Universitas Riau 2023
+      Copyright © 2023 - All right reserved by MBKM Mandiri - BPS Provinsi Riau & Universitas Riau 2023
       </div>
 
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>

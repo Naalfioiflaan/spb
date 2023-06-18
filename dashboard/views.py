@@ -8,6 +8,8 @@ from .models import Inflasi
 from .models import Pertumbuhan_Ekonomi
 from .scraper import riaupos as rp
 from .scraper import haluan_riau as hr
+from .scraper import goriau as gr
+from .scraper import tribun as tp
 from django.contrib.auth import authenticate, login, logout
 from .forms import FormLogin
 from django.contrib.auth.decorators import login_required
@@ -21,9 +23,12 @@ from django.core.paginator import Paginator
 
 @login_required(login_url=settings.LOGIN_URL)
 def index(request) :
+  if request.user.is_staff == True:
     berita = BeritaKlasifikasi.objects.order_by('-tanggal')
     rp_first_row = BeritaKlasifikasi.objects.filter(sumber="Riau Pos").order_by('-tanggal').first()
     hr_first_row = BeritaKlasifikasi.objects.filter(sumber="Haluan Riau").order_by('-tanggal').first()
+    gr_first_row = BeritaKlasifikasi.objects.filter(sumber="Go Riau").order_by('-tanggal').first()
+    tp_first_row = BeritaKlasifikasi.objects.filter(sumber="Tribun Pekanbaru").order_by('-tanggal').first()
 
     total_berita = len(berita)
 
@@ -34,16 +39,24 @@ def index(request) :
 
     context = {
         'nama' : 'Selamat Datang',
-        'user' : 'Nadira Alifia Ionendri',
+        'user' : request.user,
         'rp_tgl_terakhir_diambil' : rp_first_row.tanggal,
         'hr_tgl_terakhir_diambil' : hr_first_row.tanggal,
+        'gr_tgl_terakhir_diambil' : gr_first_row.tanggal,
+        'tp_tgl_terakhir_diambil' : tp_first_row.tanggal,
         'total_berita' : total_berita,
-        'tgl_berita' : '2019-03-14',
-        'email_user' : 'alifianadira11@gmail.com',
         'berita' : berita,
         'list' : list
     }
     return render(request, 'index.html', context)
+  else:
+    return redirect('/403')
+
+def unauthorized(request):
+    if request.user.is_staff == False:
+        return render(request, 'unauthorized.html')
+    else:
+        return redirect('/')
 
 def ambil_riaupos(request):
     if request.method == 'POST':
@@ -61,6 +74,24 @@ def ambil_haluanriau(request):
         tgl_akhir = request.POST.get('tgl_akhir')
         print(tgl_akhir)
         hr.scrap(tgl_awal, tgl_akhir)
+    return redirect('/')
+
+def ambil_goriau(request):
+    if request.method == 'POST':
+        tgl_awal = request.POST.get('tgl_awal')
+        print(tgl_awal)
+        tgl_akhir = request.POST.get('tgl_akhir')
+        print(tgl_akhir)
+        gr.scrap(tgl_awal, tgl_akhir)
+    return redirect('/')
+
+def ambil_tribun_pekanbaru(request):
+    if request.method == 'POST':
+        tgl_awal = request.POST.get('tgl_awal')
+        print(tgl_awal)
+        tgl_akhir = request.POST.get('tgl_akhir')
+        print(tgl_akhir)
+        tp.scrap(tgl_awal, tgl_akhir)
     return redirect('/')
 
 def detail(request, id) :
@@ -105,8 +136,7 @@ def detail(request, id) :
 
     context = {
         'nama' : 'Detail Berita',
-        'user' : 'Nadira Alifia Ionendri',
-        'email_user' : 'alifianadira11@gmail.com',
+        'user' : request.user,
         'berita' : berita,
         'klasifikasi' : klasifikasi,
     }
@@ -164,6 +194,12 @@ def update_classification(request, id) :
 
 def perbarui_pengaruh(request, id):
     if request.method == 'POST':
+    
+        #status
+        if request.POST.get('diperiksa'):
+            berita = BeritaKlasifikasi.objects.get(id = id)
+            berita.status = "Diperiksa"
+            berita.save()
         
         # kemiskinan
         try:
@@ -270,6 +306,9 @@ def perbarui_pengaruh(request, id):
                     pertumbuhan_ekonomi.tidak_ada = 1
             pertumbuhan_ekonomi.save()
 
+        # status
+        
+
     return redirect('/detail_berita/'+id)
 
 def login_view(request) : 
@@ -282,6 +321,8 @@ def login_view(request) :
 
         if user is not None:
             login(request, user)
+            if user.is_staff == False:
+                return redirect('/klasifikasi_berita')
             return redirect('/')
         
     return render(request, 'login.html',{'form':form})

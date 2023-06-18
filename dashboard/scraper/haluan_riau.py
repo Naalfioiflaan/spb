@@ -56,7 +56,7 @@ def scrap(tgl_awal, tgl_akhir):
             start = datetime.strptime(tgl_awal, '%Y-%m-%d').date()
             end = datetime.strptime(tgl_akhir, '%Y-%m-%d').date()
 
-            if (start < tgl and tgl <= end):
+            if (start <= tgl and tgl <= end):
                 count += 1
                 print("{0}. {1}".format(count, title))
                 print('link: '+link)
@@ -96,10 +96,10 @@ def scrap(tgl_awal, tgl_akhir):
 
                 # memasukkan ke database
                 add_berita = ('INSERT INTO tes2'
-                                '(judul, link, tanggal, isi_berita, sumber, kemiskinan, pengangguran, demokrasi, inflasi, pertumbuhan_ekonomi)'
-                                'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)')
+                                '(judul, link, tanggal, isi_berita, sumber, kemiskinan, pengangguran, demokrasi, inflasi, pertumbuhan_ekonomi, status)'
+                                'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)')
 
-                data_berita = (title, link, tgl, final_artikel, 'Haluan Riau', kemiskinan, pengangguran, demokrasi, inflasi, ekonomi)
+                data_berita = (title, link, tgl, final_artikel, 'Haluan Riau', kemiskinan, pengangguran, demokrasi, inflasi, ekonomi,'Belum diperiksa')
 
                 # insertion
                 cursor.execute(add_berita, data_berita)

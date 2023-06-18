@@ -20,12 +20,13 @@
                         <a href="#" class="pull-left mt-2"><img src="{% static '/img/logo_bps.png'%}" alt="logo_bps" style="width: 250px;"></a> 
                     </div>
                     <div class="col-6 navbar d-flex justify-content-center">
+                      {% if user.is_staff %}
                       <ul class="nav nav-pills text-light">
                         <li class="nav-item">
                             <a class="nav-link text-light" href="{% url 'index' %}">
                                 <span><iconify-icon inline icon="material-symbols:dashboard"></iconify-icon></span>
                                 &nbsp;Dashboard</a>
-                            </li>
+                        </li>
                         <li class="nav-item mx-5">
                             <a class="nav-link active" style="background-color: #367B99;" aria-current="page" href="#">
                                 <span><iconify-icon inline icon="material-symbols:newspaper-rounded" style="font-size: 20px;"></iconify-icon></span>
@@ -37,19 +38,24 @@
                             &nbsp;Kelola Pengguna</a>
                         </li>
                       </ul>
+                      {% endif %}
                     </div>
                     <div class="col-3 px-4">
                       <div class="dropdown d-flex justify-content-end align-items-center">
                         <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
                         <a class="dropdown-toggle text-light" style="text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Nadira
+                          {{user.username}}
                         </a>
                         <ul class="dropdown-menu shadow">
                           <li style="text-align: center; margin-top: 8px; margin-bottom: 5px"><img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 3rem; height: 3rem;"></li>
-                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user}}</a></li>
-                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{email_user}}</a></li>
+                          <li><a class="dropdown-item fw-bold mt-2 mb-0" style="text-align: center;" >{{user.username}}</a></li>
+                          <li style="text-align: center;" ><a class="dropdown-item mt-0 mb-2 py-0" style="color: #807B7B; font-size: 14px;">{{user.email}}</a></li>
                           <li style="text-align: center;"><a class="dropdown-item">
+                            {% if user.is_staff %}
                             <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
+                            {% else %}
+                            <div class="btn btn-warning rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">User</div></a>
+                            {% endif %}
                           </li>
                           <hr class="mt-2 mb-2 my-1">
                           <li>
@@ -69,7 +75,11 @@
                   <div class="align-self-center">
                     <h3 class="ff-source-sans display-5 text-light mb-0" style="font-weight: 500;">Selamat Datang,</h3>
                     <h3 class="ff-source-sans text-light" style="font-weight: 600;">{{user}}</h3>
-                    <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700;">Admin</div>
+                    {% if user.is_staff %}
+                    <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
+                    {% else %}
+                    <div class="btn btn-warning rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">User</div></a>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-7 py-5 pe-0 d-flex justify-content-end position-relative" >
