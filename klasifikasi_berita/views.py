@@ -53,6 +53,12 @@ def kemiskinan(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Kemiskinan.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Kemiskinan.objects.order_by('-berita__tanggal')
+
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -153,6 +159,12 @@ def pengangguran(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Pengangguran.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Pengangguran.objects.order_by('-berita__tanggal')
+    
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -252,6 +264,12 @@ def demokrasi(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Demokrasi.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Demokrasi.objects.order_by('-berita__tanggal')
+
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -351,6 +369,12 @@ def inflasi(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Inflasi.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Inflasi.objects.order_by('-berita__tanggal')
+    
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -450,6 +474,12 @@ def ekonomi(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Pertumbuhan_Ekonomi.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Pertumbuhan_Ekonomi.objects.order_by('-berita__tanggal')
+
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)

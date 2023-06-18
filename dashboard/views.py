@@ -47,11 +47,17 @@ def index(request) :
     else:
         tp_tgl = (datetime.datetime.now() - datetime.timedelta(days=7)).date()
 
+    search = request.GET.get('q')
+    if search:
+        berita = Berita.objects.filter(judul__icontains=search)
+    else:
+        berita = Berita.objects.order_by('-tanggal')
+
     total_berita = len(berita)
 
     # mengatur pagination
     p = Paginator(berita, 20)
-    page = request.GET.get('page')
+    page = request.GET.get('page', 1)
     list = p.get_page(page)
     
     context = {

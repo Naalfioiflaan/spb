@@ -377,8 +377,8 @@
               <h5 class="ff-source-sans text-dark m-0 ps-2 pb-2" style="font-weight: 700;" >Total Berita </h5>
             </div>
             <div class="col-9 d-flex justify-content-end">
-              <form role="search">
-                <input class="form-control w-100" type="search" placeholder="Cari" aria-label="Search">
+              <form role="search" action="">
+                <input class="form-control w-100" type="search" placeholder="Cari" aria-label="Search" name="q" value="{{ request.GET.q }}">
               </form>
             </div>
           </div>
@@ -482,7 +482,7 @@
           <li class="page-item h-100"><a class="page-link h-100" href="?page=1">Awal</a></li>
           {% if list.has_previous %}
           <li class="page-item h-100">
-            <a class="page-link h-100" href="?page={{list.previous_page_number}}" aria-label="Previous">
+            <a class="page-link h-100" href="?q={{ request.GET.q }}&page={{list.previous_page_number}}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
@@ -495,12 +495,12 @@
           </li>
           {% if list.has_next %}
           <li class="page-item h-100">
-            <a class="page-link h-100" href="?page={{list.next_page_number}}" aria-label="Next">
+            <a class="page-link h-100" href="?q={{ request.GET.q }}&page={{list.next_page_number}}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
           {% endif %}
-          <li class="page-item h-100"><a class="page-link h-100" href="?page={{list.paginator.num_pages}}">Akhir</a></li>
+          <li class="page-item h-100"><a class="page-link h-100" href="?q={{ request.GET.q }}&page={{list.paginator.num_pages}}">Akhir</a></li>
         </ul>
       </nav>
     </div>
