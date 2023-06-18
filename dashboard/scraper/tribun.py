@@ -91,7 +91,7 @@ def scrap(tgl_awal, tgl_akhir):
 	all_cover_articles = soup.find_all('div', class_='mr140')
 
 	# # menyimpan ke database
-	db = mysql.connector.connect(user = 'root', database = 'crawling')
+	db = mysql.connector.connect(user = 'root', database = 'spb')
 	cursor = db.cursor()
 
 	count = 1
@@ -146,7 +146,7 @@ def scrap(tgl_awal, tgl_akhir):
 			ekonomi = int(cl.classify_ekonomi(konten))
 			
 			# memasukkan ke database
-			add_berita = ('INSERT INTO tes2'
+			add_berita = ('INSERT INTO klasifikasi_berita_berita'
 							'(judul, link, tanggal, isi_berita, sumber, kemiskinan, pengangguran, demokrasi, inflasi, pertumbuhan_ekonomi, status)'
 							'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)')
 
@@ -158,35 +158,35 @@ def scrap(tgl_awal, tgl_akhir):
 			
 			berita_id = cursor.lastrowid
 			if (kemiskinan == 1) :
-				add_kemiskinan = ('INSERT INTO kemiskinan'
+				add_kemiskinan = ('INSERT klasifikasi_berita_kemiskinan'
                           '(berita_id, naik, turun, tidak_ada)'
                           'VALUES (%s, %s, %s, %s)')
 				data_kemiskinan = (berita_id, 0, 0, 0)
 				cursor.execute(add_kemiskinan, data_kemiskinan)
 				db.commit()
 			if (pengangguran == 1) :
-				add_pengangguran = ('INSERT INTO pengangguran'
+				add_pengangguran = ('INSERT klasifikasi_berita_pengangguran'
                             '(berita_id, naik, turun, tidak_ada)'
                             'VALUES (%s, %s, %s, %s)')
 				data_pengangguran = (berita_id, 0, 0, 0)
 				cursor.execute(add_pengangguran, data_pengangguran)
 				db.commit()
 			if (demokrasi == 1) :
-				add_demokrasi = ('INSERT INTO demokrasi'
+				add_demokrasi = ('INSERT klasifikasi_berita_demokrasi'
                           '(berita_id, naik, turun, tidak_ada)'
                           'VALUES (%s, %s, %s, %s)')
 				data_demokrasi = (berita_id, 0, 0, 0)
 				cursor.execute(add_demokrasi, data_demokrasi)
 				db.commit()
 			if (inflasi == 1) :
-				add_inflasi = ('INSERT INTO inflasi'
+				add_inflasi = ('INSERT klasifikasi_berita_inflasi'
                         '(berita_id, naik, turun, tidak_ada)'
                         'VALUES (%s, %s, %s, %s)')
 				data_inflasi = (berita_id, 0, 0, 0)
 				cursor.execute(add_inflasi, data_inflasi)
 				db.commit()
 			if (ekonomi == 1) :
-				add_ekonomi = ('INSERT INTO pertumbuhan_ekonomi'
+				add_ekonomi = ('INSERT klasifikasi_berita_pertumbuhan_ekonomi'
                         '(berita_id, naik, turun, tidak_ada)'
                         'VALUES (%s, %s, %s, %s)')
 				data_ekonomi = (berita_id, 0, 0, 0)

@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Berita
-from .models import BeritaKlasifikasi
 from .models import Kemiskinan
 from .models import Pengangguran
 from .models import Demokrasi
@@ -54,6 +53,12 @@ def kemiskinan(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Kemiskinan.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Kemiskinan.objects.order_by('-berita__tanggal')
+
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -102,7 +107,7 @@ def export_kemiskinan(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):
@@ -154,6 +159,12 @@ def pengangguran(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Pengangguran.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Pengangguran.objects.order_by('-berita__tanggal')
+    
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -202,7 +213,7 @@ def export_pengangguran(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):
@@ -253,6 +264,12 @@ def demokrasi(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Demokrasi.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Demokrasi.objects.order_by('-berita__tanggal')
+
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -301,7 +318,7 @@ def export_demokrasi(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):
@@ -352,6 +369,12 @@ def inflasi(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Inflasi.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Inflasi.objects.order_by('-berita__tanggal')
+    
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -400,7 +423,7 @@ def export_inflasi(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):
@@ -451,6 +474,12 @@ def ekonomi(request) :
         tidak_ada_bulan.append(pengaruh)
 
     # mengatur pagination
+    search = request.GET.get('q')
+    if search:
+        berita = Pertumbuhan_Ekonomi.objects.filter(berita__judul__icontains=search).order_by('-berita__tanggal')
+    else:
+        berita = Pertumbuhan_Ekonomi.objects.order_by('-berita__tanggal')
+
     p = Paginator(berita, 20)
     page = request.GET.get('page')
     list = p.get_page(page)
@@ -499,7 +528,7 @@ def export_pertumbuhan_ekonomi(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):

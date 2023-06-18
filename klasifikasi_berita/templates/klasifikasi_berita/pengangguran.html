@@ -216,7 +216,7 @@
           </div>
           <div class="col-9 d-flex justify-content-end">
           <form role="search">
-              <input class="form-control w-100" type="search" placeholder="Cari" aria-label="Search">
+              <input class="form-control w-100" type="search" placeholder="Cari" aria-label="Search" name="q" value="{{request.GET.q}}">
           </form>
           </div>
       </div>
@@ -226,6 +226,7 @@
           <!-- nama kolom -->
           <thead>
           <tr>
+              <th scope="col">No</th>
               <th scope="col">Tanggal</th>
               <th scope="col">Judul</th>
               <th scope="col">Link</th>
@@ -238,6 +239,7 @@
           <tbody>
           {% for berita in list %}
           <tr>
+              <td>{{ list.start_index|add:forloop.counter0 }}</td>
               <td>{{berita.tanggal}}</td>
               <td><a href="/detail_berita/{{berita.berita_id}}" style="text-decoration: none; color: black;">{{berita.judul}}</a></td>
               <td><a href="{{berita.link}}">{{berita.link}}</a></td>
@@ -288,7 +290,7 @@
       <li class="page-item h-100"><a class="page-link h-100" href="?page=1">Awal</a></li>
       {% if list.has_previous %}
       <li class="page-item h-100">
-          <a class="page-link h-100" href="?page={{list.previous_page_number}}" aria-label="Previous">
+          <a class="page-link h-100" href="?q={{ request.GET.q }}&page={{list.previous_page_number}}" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
           </a>
       </li>
@@ -301,12 +303,12 @@
       </li>
       {% if list.has_next %}
       <li class="page-item h-100">
-          <a class="page-link h-100" href="?page={{list.next_page_number}}" aria-label="Next">
+          <a class="page-link h-100" href="?q={{ request.GET.q }}&page={{list.next_page_number}}" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
           </a>
       </li>
       {% endif %}
-      <li class="page-item h-100"><a class="page-link h-100" href="?page={{list.paginator.num_pages}}">Akhir</a></li>
+      <li class="page-item h-100"><a class="page-link h-100" href="?q={{ request.GET.q }}&page={{list.paginator.num_pages}}">Akhir</a></li>
       </ul>
   </nav>
   </div>

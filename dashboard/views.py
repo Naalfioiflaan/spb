@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Berita
-from .models import BeritaKlasifikasi
-from .models import Kemiskinan
-from .models import Pengangguran
-from .models import Demokrasi
-from .models import Inflasi
-from .models import Pertumbuhan_Ekonomi
+from klasifikasi_berita.models import Berita
+from klasifikasi_berita.models import Kemiskinan
+from klasifikasi_berita.models import Pengangguran
+from klasifikasi_berita.models import Demokrasi
+from klasifikasi_berita.models import Inflasi
+from klasifikasi_berita.models import Pertumbuhan_Ekonomi
 from .scraper import riaupos as rp
 from .scraper import haluan_riau as hr
 from .scraper import goriau as gr
@@ -14,6 +13,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import FormLogin
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+import datetime
 
 # import pagination stuff
 from django.core.paginator import Paginator
@@ -24,26 +24,48 @@ from django.core.paginator import Paginator
 @login_required(login_url=settings.LOGIN_URL)
 def index(request) :
   if request.user.is_staff == True:
-    berita = BeritaKlasifikasi.objects.order_by('-tanggal')
-    rp_first_row = BeritaKlasifikasi.objects.filter(sumber="Riau Pos").order_by('-tanggal').first()
-    hr_first_row = BeritaKlasifikasi.objects.filter(sumber="Haluan Riau").order_by('-tanggal').first()
-    gr_first_row = BeritaKlasifikasi.objects.filter(sumber="Go Riau").order_by('-tanggal').first()
-    tp_first_row = BeritaKlasifikasi.objects.filter(sumber="Tribun Pekanbaru").order_by('-tanggal').first()
+    berita = Berita.objects.order_by('-tanggal')
+    rp_first_row = Berita.objects.filter(sumber="Riau Pos").order_by('-tanggal').first()
+    hr_first_row = Berita.objects.filter(sumber="Haluan Riau").order_by('-tanggal').first()
+    gr_first_row = Berita.objects.filter(sumber="Go Riau").order_by('-tanggal').first()
+    tp_first_row = Berita.objects.filter(sumber="Tribun Pekanbaru").order_by('-tanggal').first()
+
+    if rp_first_row:
+        rp_tgl = rp_first_row.tanggal
+    else:
+        rp_tgl = (datetime.datetime.now() - datetime.timedelta(days=7)).date()
+    if hr_first_row:
+        hr_tgl = hr_first_row.tanggal
+    else:
+        hr_tgl = (datetime.datetime.now() - datetime.timedelta(days=7)).date()
+    if gr_first_row:
+        gr_tgl = gr_first_row.tanggal
+    else:
+        gr_tgl = (datetime.datetime.now() - datetime.timedelta(days=7)).date()
+    if tp_first_row:
+        tp_tgl = tp_first_row.tanggal
+    else:
+        tp_tgl = (datetime.datetime.now() - datetime.timedelta(days=7)).date()
+
+    search = request.GET.get('q')
+    if search:
+        berita = Berita.objects.filter(judul__icontains=search)
+    else:
+        berita = Berita.objects.order_by('-tanggal')
 
     total_berita = len(berita)
 
     # mengatur pagination
     p = Paginator(berita, 20)
-    page = request.GET.get('page')
+    page = request.GET.get('page', 1)
     list = p.get_page(page)
-
+    
     context = {
-        'nama' : 'Selamat Datang',
         'user' : request.user,
-        'rp_tgl_terakhir_diambil' : rp_first_row.tanggal,
-        'hr_tgl_terakhir_diambil' : hr_first_row.tanggal,
-        'gr_tgl_terakhir_diambil' : gr_first_row.tanggal,
-        'tp_tgl_terakhir_diambil' : tp_first_row.tanggal,
+        'rp_tgl_terakhir_diambil' : rp_tgl,
+        'hr_tgl_terakhir_diambil' : hr_tgl,
+        'gr_tgl_terakhir_diambil' : gr_tgl,
+        'tp_tgl_terakhir_diambil' : tp_tgl,
         'total_berita' : total_berita,
         'berita' : berita,
         'list' : list
@@ -95,7 +117,7 @@ def ambil_tribun_pekanbaru(request):
     return redirect('/')
 
 def detail(request, id) :
-    berita = BeritaKlasifikasi.objects.get(id = id)
+    berita = Berita.objects.get(id = id)
     klasifikasi = {}
     
     # kemiskinan
@@ -143,7 +165,7 @@ def detail(request, id) :
     return render(request, 'detail_berita.html', context)
 
 def update_classification(request, id) :
-    berita = BeritaKlasifikasi.objects.get(id = id)
+    berita = Berita.objects.get(id = id)
     if (request.GET.get('kemiskinan')) :
         berita.kemiskinan = int(request.GET.get('kemiskinan'))
         try :
@@ -197,7 +219,7 @@ def perbarui_pengaruh(request, id):
     
         #status
         if request.POST.get('diperiksa'):
-            berita = BeritaKlasifikasi.objects.get(id = id)
+            berita = Berita.objects.get(id = id)
             berita.status = "Diperiksa"
             berita.save()
         

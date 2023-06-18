@@ -80,15 +80,44 @@
         <div class="row justify-content-end mx-5 px-5">
             <div class="col-10 d-flex justify-content-end px-0">
                 <div class="mx-3">
-                    <form role="search">
-                        <input class="form-control w-100 border" style="border-color: #AFAAAA !important;" type="search" placeholder="Cari Pengguna" aria-label="Search" style="background-color: #ECECEC;">
+                    <form role="search" action="">
+                        <input class="form-control w-100 border" style="border-color: #AFAAAA !important;" type="search" placeholder="Cari Pengguna" aria-label="Search" style="background-color: #ECECEC;" name="q" value="{{request.GET.q}}">
                     </form>
                 </div>
-                <button type="button" class="btn btn-warning text-light ff-source-sans" style="background-color: #E18F2C;">
+                <button type="button" class="btn btn-warning text-light ff-source-sans" style="background-color: #E18F2C;"
+                data-bs-toggle="modal" data-bs-target="#modalTambahPengguna">
                     <span><iconify-icon inline icon="material-symbols:add-circle" style="font-size:20px;"></iconify-icon></span>&nbsp;Tambah Pengguna
                 </button>
             </div>
         </div>
+    </div>
+
+     <!-- Modal untuk mengambil tanggal Haluan Riau-->
+     <div id="modalTambahPengguna" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <!-- konten modal-->
+        <div class="modal-content">
+          <!-- heading modal -->
+          <div class="modal-header">
+            <h4 class="modal-title">Tambah Pengguna</h4>
+          </div>
+          <!-- body modal -->
+          <form action="/add_user" method="post">
+            {% csrf_token %}
+            <div class="modal-body">
+              <input type="text" class="form-control my-3" name="username" placeholder="Username">
+              <input type="email" class="form-control my-3" name="email" placeholder="Email">
+              <input type="password" class="form-control my-3" name="password1" placeholder="Password">
+              <input type="password" class="form-control my-3" name="password2" placeholder="Confirm Password">
+            </div>
+            <!-- footer modal -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">Tutup</button>
+              <button type="submit" class="btn btn-primary">Tambah</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <!-- card tabel data penggguna-->
@@ -107,28 +136,29 @@
               <thead>
                 <tr>
                   <div class="d-flex justify-content-center align-items-center">
+                    <th scope="col">No</th>
                     <th scope="col">Nama</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Aksi</th>
                   </div>
                 </tr>
             </thead>
               <!-- data -->
               <tbody>
                 <tr class="ff-source-sans" style="color: #807B7B; font-size: 14px; background-color: #E6E6E6 !important;">
-                    <td>
-                        Menampilkan 2 dari Total {{total_pengguna}} Pengguna
+                    <td colspan="5">
+                        Menampilkan {{list.end_index}} dari Total {{total_pengguna}} Pengguna
                     </td>
-                    <td></td><td></td><td></td>
                 </tr>
                 {%for pengguna in list %}
                 <tr class="ff-source-sans">
-                  <td >
-                    <div class="row">
-                        <div class="col-2 ms-3 d-flex align-items-center">
-                            <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
+                  <td style="white-space: nowrap; width: 1%; text-align: center; vertical-align: middle;">{{ list.start_index|add:forloop.counter0 }}</td>
+                  <td>
+                    <div class="row align-items-center mx-2" style="max-width: 30rem;">
+                        <div class="col-2 d-flex justify-content-center">
+                            <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2" style="border-color: #0F8DC6!important; width: 3rem; height: 3rem;">
                         </div>
-                        <div class="col ms-3">
+                        <div class="col-10">
                           <p class="m-0" style="font-size: 1rem;">
                             {{pengguna.username}}
                           </p>
@@ -136,14 +166,14 @@
                         </div>
                     </div>
                   </td>
-                  <td class="pt-3">
+                  <td style="text-align: center; vertical-align: middle;">
                     {% if pengguna.is_staff %}
                     <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
                     {% else %}
                     <div class="btn btn-warning rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">User</div></a>
                     {% endif %}
                   </td>
-                  <td class="align-items-center pt-3">
+                  <td style="text-align: center; vertical-align: middle;">
                     <div class="dropdown">
                       <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
                         <span><iconify-icon inline icon="material-symbols:settings" style="font-size:16px;"></iconify-icon></span>
@@ -154,7 +184,7 @@
                       </ul>
                     </div>
                     </td>
-                    <td class="align-items-center pt-4">
+                    <td style="text-align: center; vertical-align: middle;">
                       <a href="/remove_pengguna/{{pengguna.id}}/" style="font-size: 1rem; text-decoration: none; color: black;">
                         <span><iconify-icon inline icon="ic:baseline-remove-circle" style="font-size:18px;"></iconify-icon></span>
                         &nbsp;Hapus Pengguna
@@ -175,7 +205,7 @@
           <li class="page-item h-100"><a class="page-link h-100" href="?page=1">Awal</a></li>
           {% if list.has_previous %}
           <li class="page-item h-100">
-              <a class="page-link h-100" href="?page={{list.previous_page_number}}" aria-label="Previous">
+              <a class="page-link h-100" href="?q={{request.GET.q}}&page={{list.previous_page_number}}" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
               </a>
           </li>
@@ -188,12 +218,12 @@
           </li>
           {% if list.has_next %}
           <li class="page-item h-100">
-              <a class="page-link h-100" href="?page={{list.next_page_number}}" aria-label="Next">
+              <a class="page-link h-100" href="?q={{request.GET.q}}&page={{list.next_page_number}}" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
               </a>
           </li>
           {% endif %}
-          <li class="page-item h-100"><a class="page-link h-100" href="?page={{list.paginator.num_pages}}">Akhir</a></li>
+          <li class="page-item h-100"><a class="page-link h-100" href="?q={{request.GET.q}}&page={{list.paginator.num_pages}}">Akhir</a></li>
           </ul>
       </nav>
       </div>
