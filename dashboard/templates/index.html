@@ -388,6 +388,7 @@
             <!-- nama kolom -->
             <thead>
               <tr>
+                <th scope="col">No</th>
                 <th scope="col">Tanggal</th>
                 <th scope="col">Judul</th>
                 <th scope="col">Link</th>
@@ -403,6 +404,7 @@
             <tbody>
               {% for berita in list %}
               <tr>
+                <td>{{ list.start_index|add:forloop.counter0 }}</td>
                 <td>{{berita.tanggal}}</td>
                 <td><a href="/detail_berita/{{berita.id}}" style="text-decoration: none; color: black;">{{berita.judul}}</a></td>
                 <td><a href="{{berita.link}}">{{berita.link}}</a></td>

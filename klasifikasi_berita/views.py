@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Berita
-from .models import BeritaKlasifikasi
 from .models import Kemiskinan
 from .models import Pengangguran
 from .models import Demokrasi
@@ -102,7 +101,7 @@ def export_kemiskinan(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):
@@ -202,7 +201,7 @@ def export_pengangguran(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):
@@ -301,7 +300,7 @@ def export_demokrasi(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):
@@ -400,7 +399,7 @@ def export_inflasi(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):
@@ -499,7 +498,7 @@ def export_pertumbuhan_ekonomi(request):
             'berita_id', 'naik', 'turun', 'tidak_ada')
         
         for row in rows:
-            berita = BeritaKlasifikasi.objects.get(id = row[0])
+            berita = Berita.objects.get(id = row[0])
             print(berita.tanggal)
             # tgl_berita = datetime.strptime(berita.tanggal, '%Y-%m-%d').date()
             if (berita.tanggal >= tgl_awal and berita.tanggal <= tgl_akhir):

@@ -108,8 +108,8 @@
                 <tr>
                   <div class="d-flex justify-content-center align-items-center">
                     <th scope="col">Nama</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Aksi</th>
                   </div>
                 </tr>
             </thead>
@@ -123,12 +123,12 @@
                 </tr>
                 {%for pengguna in list %}
                 <tr class="ff-source-sans">
-                  <td >
-                    <div class="row">
-                        <div class="col-2 ms-3 d-flex align-items-center">
-                            <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2 mx-2" style="border-color: #0F8DC6!important; width: 2rem; height: 2rem;">
+                  <td>
+                    <div class="row align-items-center mx-2" style="max-width: 30rem;">
+                        <div class="col-2 d-flex justify-content-center">
+                            <img src="{% static '/img/pp.jpg'%}" alt="foto profil user" class="rounded-circle border border-2" style="border-color: #0F8DC6!important; width: 3rem; height: 3rem;">
                         </div>
-                        <div class="col ms-3">
+                        <div class="col-10">
                           <p class="m-0" style="font-size: 1rem;">
                             {{pengguna.username}}
                           </p>
@@ -136,14 +136,14 @@
                         </div>
                     </div>
                   </td>
-                  <td class="pt-3">
+                  <td style="text-align: center; vertical-align: middle;">
                     {% if pengguna.is_staff %}
                     <div class="btn btn-success rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">Admin</div></a>
                     {% else %}
                     <div class="btn btn-warning rounded-pill text-dark ff-source-sans py-1" type="button" style="font-weight: 700; font-size: 13px;">User</div></a>
                     {% endif %}
                   </td>
-                  <td class="align-items-center pt-3">
+                  <td style="text-align: center; vertical-align: middle;">
                     <div class="dropdown">
                       <button class="btn dropdown-toggle" data-bs-toggle="dropdown">
                         <span><iconify-icon inline icon="material-symbols:settings" style="font-size:16px;"></iconify-icon></span>
@@ -154,7 +154,7 @@
                       </ul>
                     </div>
                     </td>
-                    <td class="align-items-center pt-4">
+                    <td style="text-align: center; vertical-align: middle;">
                       <a href="/remove_pengguna/{{pengguna.id}}/" style="font-size: 1rem; text-decoration: none; color: black;">
                         <span><iconify-icon inline icon="ic:baseline-remove-circle" style="font-size:18px;"></iconify-icon></span>
                         &nbsp;Hapus Pengguna

@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'webapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'crawling',
+        'NAME': 'spb',
         'HOST' : 'localhost',
         'PORT' : '3306',
         'USER' : 'root',

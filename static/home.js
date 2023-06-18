@@ -1,8 +1,17 @@
 const data = document.currentScript.dataset
-const rp_tgl_terakhir_diambil = data.rpTgl
-const hr_tgl_terakhir_diambil = data.hrTgl
-const gr_tgl_terakhir_diambil = data.grTgl
-const tp_tgl_terakhir_diambil = data.tpTgl
+let rp_tgl_terakhir_diambil = new Date();
+let hr_tgl_terakhir_diambil = new Date();
+let gr_tgl_terakhir_diambil = new Date();
+let tp_tgl_terakhir_diambil = new Date();
+rp_tgl_terakhir_diambil.setDate(rp_tgl_terakhir_diambil.getDate() - 7);
+hr_tgl_terakhir_diambil.setDate(hr_tgl_terakhir_diambil.getDate() - 7);
+gr_tgl_terakhir_diambil.setDate(gr_tgl_terakhir_diambil.getDate() - 7);
+tp_tgl_terakhir_diambil.setDate(tp_tgl_terakhir_diambil.getDate() - 7);
+if (data.rpTgl != '') rp_tgl_terakhir_diambil = data.rpTgl
+if (data.hrTgl != '') hr_tgl_terakhir_diambil = data.hrTgl
+if (data.grTgl != '') gr_tgl_terakhir_diambil = data.grTgl
+if (data.tpTgl != '') tp_tgl_terakhir_diambil = data.tpTgl
+
 
 function showLoading() {
     const loading = document.getElementById('loading');
