@@ -36,6 +36,7 @@ urlpatterns = [
     path('logout', views.logout_views, name='logout'),
     path('klasifikasi_berita', kb.klasifikasi_berita, name='klasifikasi_berita'),
     path('kelola_pengguna', kp.kelola_pengguna, name='kelola_pengguna'),
+    path('add_user', kp.add_user, name='add_user'),
     path('update_status_pengguna/<id>/', kp.update_status, name='update-status'),
     path('remove_pengguna/<id>/', kp.remove_pengguna, name='remove-pengguna'),
     path('kemiskinan', kb.kemiskinan, name="kemiskinan"),
