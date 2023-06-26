@@ -107,7 +107,7 @@ def scrap(tgl_awal, tgl_akhir):
             button = browser.find_element(By.XPATH, '//input[@value="Tampilkan Index"]')
             button.click()
 
-        elif(tgl <= start and tgl >= end):
+        elif(tgl >= start and tgl <= end):
             for j in range(len(all_cover_articles)):
                 print()
                 
