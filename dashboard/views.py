@@ -14,6 +14,7 @@ from .forms import FormLogin
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import datetime
+import time
 
 # import pagination stuff
 from django.core.paginator import Paginator
@@ -87,7 +88,7 @@ def ambil_riaupos(request):
         tgl_akhir = request.POST.get('tgl_akhir')
         print(tgl_akhir)
         rp.scrap(tgl_awal, tgl_akhir)
-    return redirect('/')
+    return redirect('/' + '?s=done')
 
 def ambil_haluanriau(request):
     if request.method == 'POST':
@@ -96,7 +97,7 @@ def ambil_haluanriau(request):
         tgl_akhir = request.POST.get('tgl_akhir')
         print(tgl_akhir)
         hr.scrap(tgl_awal, tgl_akhir)
-    return redirect('/')
+    return redirect('/' + '?s=done')
 
 def ambil_goriau(request):
     if request.method == 'POST':
@@ -105,7 +106,7 @@ def ambil_goriau(request):
         tgl_akhir = request.POST.get('tgl_akhir')
         print(tgl_akhir)
         gr.scrap(tgl_awal, tgl_akhir)
-    return redirect('/')
+    return redirect('/' + '?s=done')
 
 def ambil_tribun_pekanbaru(request):
     if request.method == 'POST':
@@ -114,7 +115,7 @@ def ambil_tribun_pekanbaru(request):
         tgl_akhir = request.POST.get('tgl_akhir')
         print(tgl_akhir)
         tp.scrap(tgl_awal, tgl_akhir)
-    return redirect('/')
+    return redirect('/' + '?s=done')
 
 def detail(request, id) :
     berita = Berita.objects.get(id = id)

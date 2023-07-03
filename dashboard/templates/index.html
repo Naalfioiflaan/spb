@@ -16,13 +16,34 @@
     <!-- end FA -->
     <!-- Tempus Dominus Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.7/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+    <script>
+      function removeAlert() {
+        document.getElementById("done").classList.remove("d-block")
+      }
+    </script>
 </head>
 <body>
+  {% if "s" in request.GET %}
+  <div id="done" class="modal d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.7)">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h5 class="modal-title mx-auto d-block">Proses scraping dan klasifikasi berita telah selesai.</h5>
+          <button type="button" class="btn btn-secondary ms-auto mt-3 d-block" onclick="removeAlert()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   {% endif %}
   <!-- Loading -->
-  <div id="loading" class="overflow-hidden d-none position-fixed d-flex justify-content-center align-items-center vh-100 vw-100" style="z-index: 1200; background-color: rgba(0, 0, 0, 0.5)">
+  <div id="loading" class="overflow-hidden d-none position-fixed d-flex justify-content-center align-items-center vh-100 vw-100" style="z-index: 1200; background-color: rgba(0, 0, 0, 0.7)">
     <div class="d-flex flex-column justify-content-center align-items-center">
       <img src="{% static '/img/loading-icon.png'%}" alt="">
-      <h3 class="text-light">Loading Scraping and Classifying News...</h3>
+      <h2 class="text-light">Loading Scraping and Classifying News...</h2>
+      <h3 class="text-light mt-5">Silahkan akses website melalui tab/jendela baru hingga proses scraping tab/jendela ini selesai.</h3>
+      <h5 class="text-light">Jika proses scraping sudah selesai, maka akan muncul pemberitahuan pada tab/jendela ini.</h5>
+
+      <a href="/" target="_blank" class="btn btn-info mt-3">Open in new tab</a>
     </div>
   </div>
 
